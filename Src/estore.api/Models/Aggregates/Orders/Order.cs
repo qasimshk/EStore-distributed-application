@@ -5,6 +5,8 @@ using estore.api.Models.Aggregates.Employee.ValueObjects;
 using estore.api.Models.Aggregates.Orders.Entities;
 using estore.api.Models.Aggregates.Orders.ValueObjects;
 using estore.api.Models.Aggregates.Employee;
+using estore.api.Models.Aggregates.Customer;
+using estore.api.Models.Aggregates.Customer.ValueObjects;
 
 public class Order : AggregateRoot<OrderId>
 {

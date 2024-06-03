@@ -1,4 +1,4 @@
-namespace estore.api.Models.Aggregates.Orders.ValueObjects;
+namespace estore.api.Models.Aggregates.Customer.ValueObjects;
 
 using estore.api.Common.Models;
 using estore.api.Extensions;

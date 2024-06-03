@@ -49,6 +49,44 @@ namespace estore.api.Persistance.Migrations
                     b.ToTable("Categories", (string)null);
                 });
 
+            modelBuilder.Entity("estore.api.Models.Aggregates.Customer.Customer", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)")
+                        .HasColumnName("CustomerId");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("ContactName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("ContactTitle")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Fax")
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(24)
+                        .HasColumnType("nvarchar(24)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyName");
+
+                    b.ToTable("Customers", (string)null);
+                });
+
             modelBuilder.Entity("estore.api.Models.Aggregates.Employee.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -117,8 +155,11 @@ namespace estore.api.Persistance.Migrations
             modelBuilder.Entity("estore.api.Models.Aggregates.Employee.Entities.EmployeeTerritory", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("EmployeeTerritoryId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -136,44 +177,6 @@ namespace estore.api.Persistance.Migrations
                         .IsUnique();
 
                     b.ToTable("EmployeeTerritories", (string)null);
-                });
-
-            modelBuilder.Entity("estore.api.Models.Aggregates.Orders.Entities.Customer", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)")
-                        .HasColumnName("CustomerId");
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("ContactName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("ContactTitle")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Fax")
-                        .HasMaxLength(24)
-                        .HasColumnType("nvarchar(24)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(24)
-                        .HasColumnType("nvarchar(24)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyName");
-
-                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("estore.api.Models.Aggregates.Orders.Entities.OrderDetail", b =>
@@ -413,6 +416,50 @@ namespace estore.api.Persistance.Migrations
                     b.ToTable("Territories", (string)null);
                 });
 
+            modelBuilder.Entity("estore.api.Models.Aggregates.Customer.Customer", b =>
+                {
+                    b.OwnsOne("estore.api.Models.Aggregates.Addresses", "CustomerAddress", b1 =>
+                        {
+                            b1.Property<string>("CustomerId")
+                                .HasColumnType("nvarchar(5)");
+
+                            b1.Property<string>("Address")
+                                .HasMaxLength(60)
+                                .HasColumnType("nvarchar(60)")
+                                .HasColumnName("Address");
+
+                            b1.Property<string>("City")
+                                .HasMaxLength(15)
+                                .HasColumnType("nvarchar(15)")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("Country")
+                                .HasMaxLength(15)
+                                .HasColumnType("nvarchar(15)")
+                                .HasColumnName("Country");
+
+                            b1.Property<string>("PostalCode")
+                                .HasMaxLength(10)
+                                .HasColumnType("nvarchar(10)")
+                                .HasColumnName("PostalCode");
+
+                            b1.Property<string>("Region")
+                                .HasMaxLength(15)
+                                .HasColumnType("nvarchar(15)")
+                                .HasColumnName("Region");
+
+                            b1.HasKey("CustomerId");
+
+                            b1.ToTable("Customers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CustomerId");
+                        });
+
+                    b.Navigation("CustomerAddress")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("estore.api.Models.Aggregates.Employee.Employee", b =>
                 {
                     b.OwnsOne("estore.api.Models.Aggregates.Addresses", "EmployeeAddress", b1 =>
@@ -476,50 +523,6 @@ namespace estore.api.Persistance.Migrations
                     b.Navigation("Territory");
                 });
 
-            modelBuilder.Entity("estore.api.Models.Aggregates.Orders.Entities.Customer", b =>
-                {
-                    b.OwnsOne("estore.api.Models.Aggregates.Addresses", "CustomerAddress", b1 =>
-                        {
-                            b1.Property<string>("CustomerId")
-                                .HasColumnType("nvarchar(5)");
-
-                            b1.Property<string>("Address")
-                                .HasMaxLength(60)
-                                .HasColumnType("nvarchar(60)")
-                                .HasColumnName("Address");
-
-                            b1.Property<string>("City")
-                                .HasMaxLength(15)
-                                .HasColumnType("nvarchar(15)")
-                                .HasColumnName("City");
-
-                            b1.Property<string>("Country")
-                                .HasMaxLength(15)
-                                .HasColumnType("nvarchar(15)")
-                                .HasColumnName("Country");
-
-                            b1.Property<string>("PostalCode")
-                                .HasMaxLength(10)
-                                .HasColumnType("nvarchar(10)")
-                                .HasColumnName("PostalCode");
-
-                            b1.Property<string>("Region")
-                                .HasMaxLength(15)
-                                .HasColumnType("nvarchar(15)")
-                                .HasColumnName("Region");
-
-                            b1.HasKey("CustomerId");
-
-                            b1.ToTable("Customers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CustomerId");
-                        });
-
-                    b.Navigation("CustomerAddress")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("estore.api.Models.Aggregates.Orders.Entities.OrderDetail", b =>
                 {
                     b.HasOne("estore.api.Models.Aggregates.Orders.Order", "Orders")
@@ -533,7 +536,7 @@ namespace estore.api.Persistance.Migrations
 
             modelBuilder.Entity("estore.api.Models.Aggregates.Orders.Order", b =>
                 {
-                    b.HasOne("estore.api.Models.Aggregates.Orders.Entities.Customer", "Customer")
+                    b.HasOne("estore.api.Models.Aggregates.Customer.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -670,15 +673,15 @@ namespace estore.api.Persistance.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("estore.api.Models.Aggregates.Customer.Customer", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("estore.api.Models.Aggregates.Employee.Employee", b =>
                 {
                     b.Navigation("EmployeeTerritories");
 
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("estore.api.Models.Aggregates.Orders.Entities.Customer", b =>
-                {
                     b.Navigation("Orders");
                 });
 

@@ -1,9 +1,7 @@
 namespace estore.api;
 
 using System.Reflection;
-using estore.api.Common.Models;
 using estore.api.Extensions;
-using estore.api.Persistance.Context;
 
 public class Program
 {
@@ -11,14 +9,14 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-        builder.Configuration.AddEnvironmentVariables().AddUserSecrets(Assembly.GetExecutingAssembly(), true);
-        builder.Services.AddControllers();
-        builder.Services.AddEStoreDbContext(builder.Configuration);
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Configuration
+            .AddEnvironmentVariables()
+            .AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 
-        builder.Services.AddScoped<IUnitOfWork, EStoreDBContext>();
+        builder.Services
+            .AddApplicationConfiguration()
+            .AddApplicationDbContext(builder.Configuration)
+            .AddApplicationDependencies();
 
         var app = builder.Build();
 

@@ -1,9 +1,11 @@
-namespace estore.api.Models.Aggregates.Orders.Entities;
+namespace estore.api.Models.Aggregates.Customer;
 
 using estore.api.Common.Models;
-using estore.api.Models.Aggregates.Orders.ValueObjects;
+using estore.api.Models.Aggregates;
+using estore.api.Models.Aggregates.Customer.ValueObjects;
+using estore.api.Models.Aggregates.Orders;
 
-public class Customer : Entity<CustomerId>
+public class Customer : AggregateRoot<CustomerId>
 {
     private readonly List<Order> _orders = [];
 

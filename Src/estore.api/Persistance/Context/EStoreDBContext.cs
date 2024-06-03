@@ -2,9 +2,9 @@ namespace estore.api.Persistance.Context;
 
 using estore.api.Common.Models;
 using estore.api.Models.Aggregates;
+using estore.api.Models.Aggregates.Customer;
 using estore.api.Models.Aggregates.Employee;
 using estore.api.Models.Aggregates.Orders;
-using estore.api.Models.Aggregates.Orders.Entities;
 using Microsoft.EntityFrameworkCore;
 
 public class EStoreDBContext : DbContext, IUnitOfWork

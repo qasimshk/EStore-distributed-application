@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -112,8 +112,8 @@ namespace estore.api.Persistance.Migrations
                     ContactName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ContactTitle = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: false),
-                    Fax = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: false),
-                    HomePage = table.Column<string>(type: "ntext", nullable: false),
+                    Fax = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: true),
+                    HomePage = table.Column<string>(type: "ntext", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     City = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     Region = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
@@ -335,13 +335,13 @@ namespace estore.api.Persistance.Migrations
                 name: "IX_Products_SupplierId",
                 table: "Products",
                 column: "SupplierId",
-                unique: true);
+                unique: false);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Territories_RegionId",
                 table: "Territories",
                 column: "RegionId",
-                unique: true);
+                unique: false);
         }
 
         /// <inheritdoc />

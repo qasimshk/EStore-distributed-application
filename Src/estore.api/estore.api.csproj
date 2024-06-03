@@ -28,7 +28,6 @@
     <Folder Include="Models\Responses\" />
     <Folder Include="Models\Requests\" />
     <Folder Include="Persistance\Migrations\" />
-    <Folder Include="Persistance\Repositories\" />
   </ItemGroup>
 
 </Project>

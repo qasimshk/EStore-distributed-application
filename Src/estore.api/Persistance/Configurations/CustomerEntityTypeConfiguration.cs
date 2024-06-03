@@ -1,7 +1,7 @@
 namespace estore.api.Persistance.Configurations;
 
-using estore.api.Models.Aggregates.Orders.Entities;
-using estore.api.Models.Aggregates.Orders.ValueObjects;
+using estore.api.Models.Aggregates.Customer;
+using estore.api.Models.Aggregates.Customer.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 public static class ApplicationDbContextExtension
 {
-    public static IServiceCollection AddEStoreDbContext(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplicationDbContext(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<EStoreDBContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlOptions =>

@@ -29,12 +29,10 @@ public class SupplierEntityTypeConfiguration : IEntityTypeConfiguration<Supplier
             .IsRequired();
 
         builder.Property(sup => sup.Fax)
-            .HasMaxLength(24)
-            .IsRequired();
+            .HasMaxLength(24);
 
         builder.Property(sup => sup.HomePage)
-            .HasColumnType("ntext")
-            .IsRequired();
+            .HasColumnType("ntext");
 
         builder.OwnsOne(sup => sup.SupplierAddress,
             navigationBuilder =>
