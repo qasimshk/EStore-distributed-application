@@ -424,26 +424,31 @@ namespace estore.api.Persistance.Migrations
                                 .HasColumnType("nvarchar(5)");
 
                             b1.Property<string>("Address")
+                                .IsRequired()
                                 .HasMaxLength(60)
                                 .HasColumnType("nvarchar(60)")
                                 .HasColumnName("Address");
 
                             b1.Property<string>("City")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("City");
 
                             b1.Property<string>("Country")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("Country");
 
                             b1.Property<string>("PostalCode")
+                                .IsRequired()
                                 .HasMaxLength(10)
                                 .HasColumnType("nvarchar(10)")
                                 .HasColumnName("PostalCode");
 
                             b1.Property<string>("Region")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("Region");
@@ -468,26 +473,31 @@ namespace estore.api.Persistance.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<string>("Address")
+                                .IsRequired()
                                 .HasMaxLength(60)
                                 .HasColumnType("nvarchar(60)")
                                 .HasColumnName("Address");
 
                             b1.Property<string>("City")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("City");
 
                             b1.Property<string>("Country")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("Country");
 
                             b1.Property<string>("PostalCode")
+                                .IsRequired()
                                 .HasMaxLength(10)
                                 .HasColumnType("nvarchar(10)")
                                 .HasColumnName("PostalCode");
 
                             b1.Property<string>("Region")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("Region");
@@ -554,26 +564,31 @@ namespace estore.api.Persistance.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<string>("Address")
+                                .IsRequired()
                                 .HasMaxLength(60)
                                 .HasColumnType("nvarchar(60)")
                                 .HasColumnName("ShipAddress");
 
                             b1.Property<string>("City")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("ShipCity");
 
                             b1.Property<string>("Country")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("ShipCountry");
 
                             b1.Property<string>("PostalCode")
+                                .IsRequired()
                                 .HasMaxLength(10)
                                 .HasColumnType("nvarchar(10)")
                                 .HasColumnName("ShipPostalCode");
 
                             b1.Property<string>("Region")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("ShipRegion");
@@ -621,26 +636,31 @@ namespace estore.api.Persistance.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<string>("Address")
+                                .IsRequired()
                                 .HasMaxLength(60)
                                 .HasColumnType("nvarchar(60)")
                                 .HasColumnName("Address");
 
                             b1.Property<string>("City")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("City");
 
                             b1.Property<string>("Country")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("Country");
 
                             b1.Property<string>("PostalCode")
+                                .IsRequired()
                                 .HasMaxLength(10)
                                 .HasColumnType("nvarchar(10)")
                                 .HasColumnName("PostalCode");
 
                             b1.Property<string>("Region")
+                                .IsRequired()
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("Region");

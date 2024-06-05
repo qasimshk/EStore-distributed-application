@@ -15,7 +15,7 @@ public class OrderDetailsEntityTypeConfiguration : IEntityTypeConfiguration<Orde
 
         builder.Property(ordDtl => ordDtl.Id).HasConversion(
             orderDetailId => orderDetailId.Value,
-            value => OrderDetailId.CreateUnique())
+            value => new OrderDetailId(value))
             .HasColumnName(nameof(OrderDetailId));
 
         builder.Property(od => od.OrderId)
@@ -25,12 +25,14 @@ public class OrderDetailsEntityTypeConfiguration : IEntityTypeConfiguration<Orde
             .IsRequired();
 
         builder.Property(od => od.UnitPrice)
+            .HasConversion<decimal>()
             .IsRequired();
 
         builder.Property(od => od.Quantity)
             .IsRequired();
 
         builder.Property(od => od.Discount)
+            .HasConversion<double>()
             .IsRequired();
 
         builder.HasIndex(od => od.OrderId);

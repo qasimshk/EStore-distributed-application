@@ -9,7 +9,7 @@ public class OrderDetailId : ValueObject
 
     protected OrderDetailId() { }
 
-    private OrderDetailId(int value) => Value = value;
+    public OrderDetailId(int value) => Value = value;
 
     public static OrderDetailId CreateUnique() => new(Guid.NewGuid().GuidToInteger());
 

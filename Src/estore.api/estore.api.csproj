@@ -24,9 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Common\Errors\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\Responses\" />
-    <Folder Include="Models\Requests\" />
+    <Folder Include="Validations\" />
     <Folder Include="Persistance\Migrations\" />
   </ItemGroup>
 

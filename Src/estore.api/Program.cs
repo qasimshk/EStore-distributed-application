@@ -2,6 +2,7 @@ namespace estore.api;
 
 using System.Reflection;
 using estore.api.Extensions;
+using estore.api.Middleware;
 
 public class Program
 {
@@ -26,6 +27,8 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
 
         app.UseHttpsRedirection();
 

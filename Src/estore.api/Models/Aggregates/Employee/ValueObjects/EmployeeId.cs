@@ -9,7 +9,7 @@ public class EmployeeId : ValueObject
 
     protected EmployeeId() { }
 
-    private EmployeeId(int value) => Value = value;
+    public EmployeeId(int value) => Value = value;
 
     public static EmployeeId CreateUnique() => new(Guid.NewGuid().GuidToInteger());
 

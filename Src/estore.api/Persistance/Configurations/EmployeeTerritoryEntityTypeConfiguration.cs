@@ -15,7 +15,7 @@ public class EmployeeTerritoryEntityTypeConfiguration : IEntityTypeConfiguration
 
         builder.Property(et => et.Id).HasConversion(
             employeeTerritoryId => employeeTerritoryId.Value,
-            value => EmployeeTerritoryId.CreateUnique())
+            value => new EmployeeTerritoryId(value))
             .HasColumnName(nameof(EmployeeTerritoryId))
             .ValueGeneratedOnAdd();
 

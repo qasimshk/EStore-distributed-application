@@ -15,15 +15,15 @@ public class Customer : AggregateRoot<CustomerId>
 
     public string ContactTitle { get; }
 
-    public string Phone { get; set; }
+    public string Phone { get; }
 
-    public string? Fax { get; set; }
+    public string? Fax { get; }
 
     public Addresses CustomerAddress { get; }
 
     public IReadOnlyList<Order> Orders => _orders.AsReadOnly();
 
-    private Customer() { }
+    protected Customer() { }
 
     private Customer(CustomerId customerId,
         string companyName,

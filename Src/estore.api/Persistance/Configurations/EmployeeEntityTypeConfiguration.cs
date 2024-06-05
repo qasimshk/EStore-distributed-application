@@ -15,7 +15,7 @@ public class EmployeeEntityTypeConfiguration : IEntityTypeConfiguration<Employee
 
         builder.Property(emp => emp.Id).HasConversion(
             employeeId => employeeId.Value,
-            value => EmployeeId.CreateUnique())
+            value => new EmployeeId(value))
             .HasColumnName(nameof(EmployeeId));
 
         builder.Property(emp => emp.Title)
@@ -62,31 +62,31 @@ public class EmployeeEntityTypeConfiguration : IEntityTypeConfiguration<Employee
             .HasMaxLength(255)
             .IsRequired();
 
-        builder.OwnsOne(employee => employee.EmployeeAddress,
+        builder.ComplexProperty(employee => employee.EmployeeAddress,
             navigationBuilder =>
             {
                 navigationBuilder
-                    .Property(sa => sa.Address)
+                    .Property(employeeAddress => employeeAddress.Address)
                     .HasMaxLength(60)
                     .HasColumnName("Address");
 
                 navigationBuilder
-                    .Property(sa => sa.City)
+                    .Property(employeeAddress => employeeAddress.City)
                     .HasMaxLength(15)
                     .HasColumnName("City");
 
                 navigationBuilder
-                    .Property(sa => sa.Region)
+                    .Property(employeeAddress => employeeAddress.Region)
                     .HasMaxLength(15)
                     .HasColumnName("Region");
 
                 navigationBuilder
-                    .Property(sa => sa.PostalCode)
+                    .Property(employeeAddress => employeeAddress.PostalCode)
                     .HasMaxLength(10)
                     .HasColumnName("PostalCode");
 
                 navigationBuilder
-                    .Property(sa => sa.Country)
+                    .Property(employeeAddress => employeeAddress.Country)
                     .HasMaxLength(15)
                     .HasColumnName("Country");
             });

@@ -15,7 +15,7 @@ public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer
 
         builder.Property(c => c.Id).HasConversion(
             customerId => customerId.Value,
-            value => CustomerId.CreateUnique())
+            value => new CustomerId(value))
             .HasMaxLength(5)
             .HasColumnName(nameof(CustomerId));
 
@@ -31,31 +31,31 @@ public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer
             .HasMaxLength(30)
             .IsRequired();
 
-        builder.OwnsOne(customer => customer.CustomerAddress,
+        builder.ComplexProperty(customer => customer.CustomerAddress,
             navigationBuilder =>
             {
                 navigationBuilder
-                    .Property(sa => sa.Address)
+                    .Property(customerAddress => customerAddress.Address)
                     .HasMaxLength(60)
                     .HasColumnName("Address");
 
                 navigationBuilder
-                    .Property(sa => sa.City)
+                    .Property(customerAddress => customerAddress.City)
                     .HasMaxLength(15)
                     .HasColumnName("City");
 
                 navigationBuilder
-                    .Property(sa => sa.Region)
+                    .Property(customerAddress => customerAddress.Region)
                     .HasMaxLength(15)
                     .HasColumnName("Region");
 
                 navigationBuilder
-                    .Property(sa => sa.PostalCode)
+                    .Property(customerAddress => customerAddress.PostalCode)
                     .HasMaxLength(10)
                     .HasColumnName("PostalCode");
 
                 navigationBuilder
-                    .Property(sa => sa.Country)
+                    .Property(customerAddress => customerAddress.Country)
                     .HasMaxLength(15)
                     .HasColumnName("Country");
             });

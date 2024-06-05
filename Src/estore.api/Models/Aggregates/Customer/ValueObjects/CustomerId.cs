@@ -9,7 +9,7 @@ public class CustomerId : ValueObject
 
     protected CustomerId() { }
 
-    private CustomerId(string value) => Value = value;
+    public CustomerId(string value) => Value = value;
 
     public static CustomerId CreateUnique() => new(Guid.NewGuid().GuidToString());
 

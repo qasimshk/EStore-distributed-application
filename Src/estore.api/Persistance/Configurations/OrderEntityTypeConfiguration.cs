@@ -15,7 +15,7 @@ public class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
 
         builder.Property(o => o.Id).HasConversion(
             orderId => orderId.Value,
-            value => OrderId.CreateUnique())
+            value => new OrderId(value))
             .HasColumnName(nameof(OrderId));
 
         builder.Property(o => o.CustomerId)
@@ -36,36 +36,37 @@ public class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
 
         builder.Property(o => o.ShipVia);
 
-        builder.Property(o => o.Freight);
+        builder.Property(o => o.Freight)
+            .HasConversion<decimal>();
 
         builder.Property(o => o.ShipName)
             .HasMaxLength(40);
 
-        builder.OwnsOne(order => order.ShippingAddress,
+        builder.ComplexProperty(order => order.ShippingAddress,
             navigationBuilder =>
             {
                 navigationBuilder
-                    .Property(sa => sa.Address)
+                    .Property(shippingAddress => shippingAddress.Address)
                     .HasMaxLength(60)
                     .HasColumnName("ShipAddress");
 
                 navigationBuilder
-                    .Property(sa => sa.City)
+                    .Property(shippingAddress => shippingAddress.City)
                     .HasMaxLength(15)
                     .HasColumnName("ShipCity");
 
                 navigationBuilder
-                    .Property(sa => sa.Region)
+                    .Property(shippingAddress => shippingAddress.Region)
                     .HasMaxLength(15)
                     .HasColumnName("ShipRegion");
 
                 navigationBuilder
-                    .Property(sa => sa.PostalCode)
+                    .Property(shippingAddress => shippingAddress.PostalCode)
                     .HasMaxLength(10)
                     .HasColumnName("ShipPostalCode");
 
                 navigationBuilder
-                    .Property(sa => sa.Country)
+                    .Property(shippingAddress => shippingAddress.Country)
                     .HasMaxLength(15)
                     .HasColumnName("ShipCountry");
             });

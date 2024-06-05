@@ -9,7 +9,7 @@ public class EmployeeTerritoryId : ValueObject
 
     protected EmployeeTerritoryId() { }
 
-    private EmployeeTerritoryId(int value) => Value = value;
+    public EmployeeTerritoryId(int value) => Value = value;
 
     public static EmployeeTerritoryId CreateUnique() => new(Guid.NewGuid().GuidToInteger());
 

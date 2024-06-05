@@ -8,11 +8,9 @@ using estore.api.Models.Aggregates.Employee;
 using estore.api.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 
-public class EmployeeRepository : IEmployeeRepository
+public class EmployeeRepository(EStoreDBContext context) : IEmployeeRepository
 {
-    private readonly EStoreDBContext _context;
-
-    public EmployeeRepository(EStoreDBContext context) => _context = context;
+    private readonly EStoreDBContext _context = context;
 
     public void Add(Employee entity) => _context.Add(entity);
 

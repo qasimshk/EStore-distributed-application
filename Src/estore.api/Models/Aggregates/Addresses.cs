@@ -31,7 +31,8 @@ public class Addresses : ValueObject
         string country) => new(address, city, region, postalCode, country);
 
     public string GetCompleteAddress() =>
-        $"{Address}, {City}, {Region}, {PostalCode}, {Country}";
+        string.Join(", ", new string[] { Address, City, Region, PostalCode, Country }
+              .Where(address => !string.IsNullOrEmpty(address)));
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
