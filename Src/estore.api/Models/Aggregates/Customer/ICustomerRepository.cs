@@ -4,4 +4,5 @@ using estore.api.Common.Models;
 
 public interface ICustomerRepository : IRepository<Customer>
 {
+    IQueryable<Customer> GetAll();
 }

@@ -16,5 +16,5 @@ public class CustomerResponse
 
     public string? Fax { get; set; }
 
-    public List<OrderResponse> CustomerOrders { get; set; } = [];
+    public List<CustomerOrderResponse> CustomerOrders { get; set; } = [];
 }

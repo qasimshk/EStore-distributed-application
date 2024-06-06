@@ -36,7 +36,7 @@ public class EStoreDBContext : DbContext, IUnitOfWork
         base.OnModelCreating(modelBuilder);
     }
 
-    public async Task<int> SaveEntitiesAsync(CancellationToken cancellationToken = default) =>
+    public async Task<int> CompleteAsync(CancellationToken cancellationToken = default) =>
         await base.SaveChangesAsync(cancellationToken);
 }
 

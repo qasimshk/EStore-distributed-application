@@ -6,7 +6,7 @@ using estore.api.Models.Responses;
 
 public class OrderMapper : IOrderMapper
 {
-    public OrderResponse Map(Order from) => new()
+    public CustomerOrderResponse Map(Order from) => new()
     {
         CustomerName = from.Customer.ContactName,
         EmployeeName = "dfdsfsd",//$"{from.Employee.FirstName} {from.Employee.LastName}",

@@ -6,6 +6,8 @@ using estore.api.Common.Results;
 using System.Net;
 using estore.api.Middleware;
 using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
+using estore.api.Validations;
 
 public static class ApplicationConfigurations
 {
@@ -34,6 +36,9 @@ public static class ApplicationConfigurations
 
         // Middlewares
         services.AddTransient<ExceptionHandlingMiddleware>();
+
+        // Fluent Validator
+        services.AddValidatorsFromAssemblyContaining<CreateCustomerRequestValidator>();
 
         return services;
     }

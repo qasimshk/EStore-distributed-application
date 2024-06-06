@@ -15,15 +15,15 @@ public class OrderServices(IOrderRepository orderRepository,
     private readonly IOrderRepository _orderRepository = orderRepository;
     private readonly IOrderMapper _orderMapper = orderMapper;
 
-    public async Task<Result<OrderResponse>> GetOrderByOrderId(int orderId)
+    public async Task<Result<CustomerOrderResponse>> GetOrderByOrderId(int orderId)
     {
         var order = await _orderRepository
             .FindByConditionAsync(x => x.Id == new OrderId(orderId));
 
         return order.Any() ?
-            Result<OrderResponse>
+            Result<CustomerOrderResponse>
                 .SuccessResult(_orderMapper.Map(order.SingleOrDefault()!)) :
-            Result<OrderResponse>
+            Result<CustomerOrderResponse>
                 .FailedResult("Order not found with this Id", HttpStatusCode.NotFound);
 
     }

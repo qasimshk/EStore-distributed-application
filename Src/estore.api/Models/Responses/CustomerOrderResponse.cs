@@ -1,6 +1,6 @@
 namespace estore.api.Models.Responses;
 
-public class OrderResponse
+public class CustomerOrderResponse
 {
     public int OrderId { get; set; }
 

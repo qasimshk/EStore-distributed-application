@@ -1,5 +1,6 @@
 namespace estore.api.Extensions;
 
+using estore.api.Common.Models;
 using estore.api.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,8 @@ public static class ApplicationDbContextExtension
         services.AddDbContext<EStoreDBContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlOptions =>
             sqlOptions.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null)));
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

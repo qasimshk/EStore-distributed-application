@@ -1,7 +1,4 @@
 namespace estore.api.Common.Pagination;
-
-using Microsoft.EntityFrameworkCore;
-
 // https://code-maze.com/paging-aspnet-core-webapi/
 public class PagedList<T> : List<T>, IPagedList<T>
 {
@@ -27,13 +24,6 @@ public class PagedList<T> : List<T>, IPagedList<T>
     {
         var count = source.Count();
         var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-        return new PagedList<T>(items, count, pageNumber, pageSize);
-    }
-
-    public async Task<PagedList<T>> ToPagedListAsync(IQueryable<T> source, int pageNumber, int pageSize)
-    {
-        var count = source.Count();
-        var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         return new PagedList<T>(items, count, pageNumber, pageSize);
     }
 }

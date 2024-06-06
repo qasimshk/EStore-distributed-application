@@ -5,5 +5,5 @@ using estore.api.Models.Responses;
 
 public interface IOrderServices
 {
-    Task<Result<OrderResponse>> GetOrderByOrderId(int orderId);
+    Task<Result<CustomerOrderResponse>> GetOrderByOrderId(int orderId);
 }
