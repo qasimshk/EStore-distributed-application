@@ -8,5 +8,7 @@ public interface IRepository<TEntity> where TEntity : notnull
 
     void Update(TEntity entity);
 
+    IQueryable<TEntity> GetAll();
+
     Task<IEnumerable<TEntity>> FindByConditionAsync(Expression<Func<TEntity, bool>> expression);
 }

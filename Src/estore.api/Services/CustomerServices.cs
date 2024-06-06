@@ -55,7 +55,7 @@ public class CustomerServices(
             .FailedResult("Customer not found with this Id", HttpStatusCode.NotFound);
     }
 
-    public PagedList<CustomerResponse> GetCustomers(SearchCustomer search)
+    public PagedList<CustomerResponse> GetCustomers(SearchCustomerRequest search)
     {
         var customers = _customerRepository.GetAll();
 

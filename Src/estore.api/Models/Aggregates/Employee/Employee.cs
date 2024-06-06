@@ -5,7 +5,7 @@ using estore.api.Models.Aggregates.Employee.Entities;
 using estore.api.Models.Aggregates.Employee.ValueObjects;
 using estore.api.Models.Aggregates.Orders;
 
-public class Employee : AggregateRoot<EmployeeId>
+public sealed class Employee : AggregateRoot<EmployeeId>
 {
     private readonly List<EmployeeTerritory> _employeeTerritories = [];
 

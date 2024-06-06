@@ -8,7 +8,7 @@ using estore.api.Models.Aggregates.Employee;
 using estore.api.Models.Aggregates.Customer;
 using estore.api.Models.Aggregates.Customer.ValueObjects;
 
-public class Order : AggregateRoot<OrderId>
+public sealed class Order : AggregateRoot<OrderId>
 {
     private readonly List<OrderDetail> _orderDetails = [];
 

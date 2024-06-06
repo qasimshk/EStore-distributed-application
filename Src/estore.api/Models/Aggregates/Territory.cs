@@ -2,7 +2,7 @@ namespace estore.api.Models.Aggregates;
 
 using estore.api.Models.Aggregates.Employee.Entities;
 
-public class Territory
+public sealed class Territory
 {
     public string TerritoryId { get; } = string.Empty;
 

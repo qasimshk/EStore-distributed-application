@@ -1,6 +1,6 @@
 namespace estore.api.Models.Aggregates;
 
-public class Product
+public sealed class Product
 {
     public int ProductId { get; }
 

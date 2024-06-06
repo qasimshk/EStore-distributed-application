@@ -3,7 +3,7 @@ namespace estore.api.Models.Aggregates.Employee.ValueObjects;
 using estore.api.Common.Models;
 using estore.api.Extensions;
 
-public class EmployeeId : ValueObject
+public sealed class EmployeeId : ValueObject
 {
     public int Value { get; }
 

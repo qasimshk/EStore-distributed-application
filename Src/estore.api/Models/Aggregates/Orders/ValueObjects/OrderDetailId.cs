@@ -3,7 +3,7 @@ namespace estore.api.Models.Aggregates.Orders.ValueObjects;
 using estore.api.Common.Models;
 using estore.api.Extensions;
 
-public class OrderDetailId : ValueObject
+public sealed class OrderDetailId : ValueObject
 {
     public int Value { get; }
 

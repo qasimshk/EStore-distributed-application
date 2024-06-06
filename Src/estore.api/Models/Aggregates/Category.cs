@@ -1,6 +1,6 @@
 namespace estore.api.Models.Aggregates;
 
-public class Category
+public sealed class Category
 {
     private readonly List<Product> _products = [];
 

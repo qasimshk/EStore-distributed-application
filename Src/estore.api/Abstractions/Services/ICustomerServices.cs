@@ -9,7 +9,7 @@ public interface ICustomerServices
 {
     Task<Result<CustomerResponse>> GetCustomerByCustomerId(string customerId);
 
-    PagedList<CustomerResponse> GetCustomers(SearchCustomer search);
+    PagedList<CustomerResponse> GetCustomers(SearchCustomerRequest search);
 
     Task<Result<CreateCustomerResponse>> CreateCustomer(CreateCustomerRequest customerRequest);
 }

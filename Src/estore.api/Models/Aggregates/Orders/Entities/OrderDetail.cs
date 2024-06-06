@@ -3,7 +3,7 @@ namespace estore.api.Models.Aggregates.Orders.Entities;
 using estore.api.Common.Models;
 using estore.api.Models.Aggregates.Orders.ValueObjects;
 
-public class OrderDetail : Entity<OrderDetailId>
+public sealed class OrderDetail : Entity<OrderDetailId>
 {
     public OrderId OrderId { get; }
 
@@ -16,6 +16,8 @@ public class OrderDetail : Entity<OrderDetailId>
     public double Discount { get; }
 
     public Order Orders { get; }
+
+    public Product Item { get; }
 
     private OrderDetail() { }
 

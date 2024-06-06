@@ -28,7 +28,7 @@ public class CustomerController(ICustomerServices customerServices) : Controller
     [HttpGet("search", Name = nameof(GetCustomerBySearchParameters))]
     [ProducesResponseType(typeof(PagedList<List<CustomerResponse>>), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
-    public IActionResult GetCustomerBySearchParameters([FromQuery] SearchCustomer search)
+    public IActionResult GetCustomerBySearchParameters([FromQuery] SearchCustomerRequest search)
     {
         var result = _customerServices.GetCustomers(search);
 
@@ -42,7 +42,7 @@ public class CustomerController(ICustomerServices customerServices) : Controller
             result.HasPrevious
         };
 
-        Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metadata));
+        Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(metadata));
 
         return Ok(result);
     }

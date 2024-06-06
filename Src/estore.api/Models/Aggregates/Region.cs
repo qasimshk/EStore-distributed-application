@@ -1,6 +1,6 @@
 namespace estore.api.Models.Aggregates;
 
-public class Region
+public sealed class Region
 {
     public int RegionId { get; }
 

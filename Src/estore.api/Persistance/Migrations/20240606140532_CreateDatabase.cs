@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -38,9 +38,9 @@ namespace estore.api.Persistance.Migrations
                     Fax = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     City = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
-                    Region = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     PostalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true)
+                    Region = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,17 +58,17 @@ namespace estore.api.Persistance.Migrations
                     TitleOfCourtesy = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    City = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
-                    Region = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
-                    PostalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     HomePhone = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: false),
                     Extension = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false),
                     Photo = table.Column<byte[]>(type: "image", nullable: false),
                     Notes = table.Column<string>(type: "ntext", nullable: false),
                     ReportsTo = table.Column<int>(type: "int", nullable: true),
-                    PhotoPath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    PhotoPath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
+                    City = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
+                    PostalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Region = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -112,8 +112,8 @@ namespace estore.api.Persistance.Migrations
                     ContactName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ContactTitle = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: false),
-                    Fax = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: true),
-                    HomePage = table.Column<string>(type: "ntext", nullable: true),
+                    Fax = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: false),
+                    HomePage = table.Column<string>(type: "ntext", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     City = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     Region = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
@@ -140,9 +140,9 @@ namespace estore.api.Persistance.Migrations
                     ShipName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     ShipAddress = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     ShipCity = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
-                    ShipRegion = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
+                    ShipCountry = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     ShipPostalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    ShipCountry = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true)
+                    ShipRegion = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -214,6 +214,32 @@ namespace estore.api.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EmployeeTerritories",
+                columns: table => new
+                {
+                    EmployeeTerritoryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    TerritoryId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeTerritories", x => x.EmployeeTerritoryId);
+                    table.ForeignKey(
+                        name: "FK_EmployeeTerritories_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EmployeeTerritories_Territories_TerritoryId",
+                        column: x => x.TerritoryId,
+                        principalTable: "Territories",
+                        principalColumn: "TerritoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderDetails",
                 columns: table => new
                 {
@@ -233,30 +259,11 @@ namespace estore.api.Persistance.Migrations
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EmployeeTerritories",
-                columns: table => new
-                {
-                    EmployeeTerritoryId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    TerritoryId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeeTerritories", x => x.EmployeeTerritoryId);
                     table.ForeignKey(
-                        name: "FK_EmployeeTerritories_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_EmployeeTerritories_Territories_TerritoryId",
-                        column: x => x.TerritoryId,
-                        principalTable: "Territories",
-                        principalColumn: "TerritoryId",
+                        name: "FK_OrderDetails_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -294,7 +301,8 @@ namespace estore.api.Persistance.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_ProductId",
                 table: "OrderDetails",
-                column: "ProductId");
+                column: "ProductId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
@@ -335,13 +343,13 @@ namespace estore.api.Persistance.Migrations
                 name: "IX_Products_SupplierId",
                 table: "Products",
                 column: "SupplierId",
-                unique: false);
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Territories_RegionId",
                 table: "Territories",
                 column: "RegionId",
-                unique: false);
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -354,9 +362,6 @@ namespace estore.api.Persistance.Migrations
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
                 name: "Shippers");
 
             migrationBuilder.DropTable(
@@ -366,10 +371,7 @@ namespace estore.api.Persistance.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Suppliers");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Region");
@@ -379,6 +381,12 @@ namespace estore.api.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Suppliers");
         }
     }
 }

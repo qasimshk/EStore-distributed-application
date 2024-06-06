@@ -2,7 +2,7 @@ namespace estore.api.Models.Requests;
 
 using estore.api.Common.Pagination;
 
-public class SearchCustomer : QueryStringParameters
+public class SearchCustomerRequest : QueryStringParameters
 {
     public string? CompanyName { get; set; }
 

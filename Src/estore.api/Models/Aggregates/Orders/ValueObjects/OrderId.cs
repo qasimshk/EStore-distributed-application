@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using estore.api.Common.Models;
 using estore.api.Extensions;
 
-public class OrderId : ValueObject
+public sealed class OrderId : ValueObject
 {
     public int Value { get; }
 

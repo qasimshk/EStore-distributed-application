@@ -3,7 +3,7 @@ namespace estore.api.Models.Aggregates.Customer.ValueObjects;
 using estore.api.Common.Models;
 using estore.api.Extensions;
 
-public class CustomerId : ValueObject
+public sealed class CustomerId : ValueObject
 {
     public string Value { get; } = string.Empty;
 

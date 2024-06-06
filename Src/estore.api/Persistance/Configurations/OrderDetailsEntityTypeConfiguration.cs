@@ -35,6 +35,10 @@ public class OrderDetailsEntityTypeConfiguration : IEntityTypeConfiguration<Orde
             .HasConversion<double>()
             .IsRequired();
 
+        builder.HasOne(od => od.Item)
+            .WithOne()
+            .HasForeignKey<OrderDetail>(od => od.ProductId);
+
         builder.HasIndex(od => od.OrderId);
 
         builder.HasIndex(od => od.ProductId);

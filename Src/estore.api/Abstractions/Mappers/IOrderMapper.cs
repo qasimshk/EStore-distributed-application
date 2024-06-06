@@ -5,5 +5,5 @@ using estore.api.Models.Aggregates.Orders;
 using estore.api.Models.Responses;
 
 public interface IOrderMapper :
-    IMapper<Order, CustomerOrderResponse>
+    IMapper<Order, OrderResponse>
 { }

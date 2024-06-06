@@ -1,6 +1,6 @@
 namespace estore.api.Models.Aggregates;
 
-public class Shipper
+public sealed class Shipper
 {
     public int ShipperId { get; }
 
