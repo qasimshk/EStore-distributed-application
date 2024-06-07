@@ -45,4 +45,16 @@ public class OrderController(IOrderServices orderServices) : Controller
 
         return Ok(response);
     }
+
+    [HttpPost]
+    [ProducesResponseType((int)HttpStatusCode.Created)]
+    [ProducesResponseType(typeof(Result<OrderResponse>), (int)HttpStatusCode.BadRequest)]
+    public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest model)
+    {
+        var result = await _orderServices.CreateOrder(model);
+
+        return result.IsSuccess ?
+            CreatedAtRoute(nameof(GetOrderByOrderId), new { orderId = result.Value.OrderId }, result) :
+            BadRequest(result);
+    }
 }
