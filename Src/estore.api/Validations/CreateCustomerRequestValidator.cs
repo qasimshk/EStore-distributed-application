@@ -1,7 +1,7 @@
 namespace estore.api.Validations;
 
 using estore.api.Models.Aggregates.Customer;
-using estore.api.Models.Requests;
+using estore.common.Models.Requests;
 using FluentValidation;
 
 public class CreateCustomerRequestValidator : AbstractValidator<CreateCustomerRequest>

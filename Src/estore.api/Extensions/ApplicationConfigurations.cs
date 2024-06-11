@@ -1,13 +1,12 @@
 namespace estore.api.Extensions;
 
-using estore.api.Common.Pagination;
-using estore.api.Common.Results;
-
 using System.Net;
 using estore.api.Middleware;
-using Microsoft.AspNetCore.Mvc;
-using FluentValidation;
 using estore.api.Validations;
+using estore.common.Common.Pagination;
+using estore.common.Common.Results;
+using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 
 public static class ApplicationConfigurations
 {

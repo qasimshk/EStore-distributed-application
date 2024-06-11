@@ -4,12 +4,12 @@ using System.Net;
 using System.Threading.Tasks;
 using estore.api.Abstractions.Mappers;
 using estore.api.Abstractions.Services;
-using estore.api.Common.Models;
-using estore.api.Common.Pagination;
-using estore.api.Common.Results;
+using estore.api.Common;
 using estore.api.Models.Aggregates.Customer;
-using estore.api.Models.Requests;
-using estore.api.Models.Responses;
+using estore.common.Common.Pagination;
+using estore.common.Common.Results;
+using estore.common.Models.Requests;
+using estore.common.Models.Responses;
 using FluentValidation;
 using Models.Aggregates.Customer.ValueObjects;
 
@@ -79,6 +79,6 @@ public class CustomerServices(
             customers = customers.Where(x => x.CompanyName == search.CompanyName);
         }
 
-        return _paged.ToPagedList(customers.Select(_customerMapper.Map).AsQueryable(), search.PageNumber, search.PageSize);
+        return _paged.ToPagedList(customers.Distinct().Select(_customerMapper.Map).AsQueryable(), search.PageNumber, search.PageSize);
     }
 }

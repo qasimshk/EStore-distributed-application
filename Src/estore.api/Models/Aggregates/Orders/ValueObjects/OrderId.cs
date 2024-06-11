@@ -1,7 +1,7 @@
 namespace estore.api.Models.Aggregates.Orders.ValueObjects;
 
 using System.Collections.Generic;
-using estore.api.Common.Models;
+using estore.api.Common;
 using estore.api.Extensions;
 
 public sealed class OrderId : ValueObject

@@ -1,9 +1,9 @@
 namespace estore.api.Abstractions.Mappers;
 
-using estore.api.Common.Models;
+using estore.api.Common;
 using estore.api.Models.Aggregates.Customer;
-using estore.api.Models.Requests;
-using estore.api.Models.Responses;
+using estore.common.Models.Responses;
+using estore.common.Models.Requests;
 
 public interface ICustomerMapper :
     IMapper<Customer, CustomerResponse>,

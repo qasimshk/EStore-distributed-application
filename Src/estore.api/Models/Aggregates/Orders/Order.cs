@@ -1,12 +1,12 @@
 namespace estore.api.Models.Aggregates.Orders;
 
-using estore.api.Common.Models;
 using estore.api.Models.Aggregates.Employee.ValueObjects;
 using estore.api.Models.Aggregates.Orders.Entities;
 using estore.api.Models.Aggregates.Orders.ValueObjects;
 using estore.api.Models.Aggregates.Employee;
 using estore.api.Models.Aggregates.Customer;
 using estore.api.Models.Aggregates.Customer.ValueObjects;
+using estore.api.Common;
 
 public sealed class Order : AggregateRoot<OrderId>
 {

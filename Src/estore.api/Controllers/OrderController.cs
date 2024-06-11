@@ -3,10 +3,10 @@ namespace estore.api.Controllers;
 using System.Net;
 using System.Text.Json;
 using estore.api.Abstractions.Services;
-using estore.api.Common.Pagination;
-using estore.api.Common.Results;
-using estore.api.Models.Requests;
-using estore.api.Models.Responses;
+using estore.common.Common.Pagination;
+using estore.common.Common.Results;
+using estore.common.Models.Requests;
+using estore.common.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -16,7 +16,7 @@ public class OrderController(IOrderServices orderServices) : Controller
     private readonly IOrderServices _orderServices = orderServices;
 
     [HttpGet("{orderId}", Name = nameof(GetOrderByOrderId))]
-    [ProducesResponseType(typeof(Result<CustomerOrderResponse>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(Result<OrderResponse>), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<IActionResult> GetOrderByOrderId([FromRoute] int orderId)
     {

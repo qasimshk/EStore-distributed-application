@@ -1,6 +1,6 @@
 namespace estore.api.Models.Aggregates.Employee.ValueObjects;
 
-using estore.api.Common.Models;
+using estore.api.Common;
 using estore.api.Extensions;
 
 public sealed class EmployeeId : ValueObject

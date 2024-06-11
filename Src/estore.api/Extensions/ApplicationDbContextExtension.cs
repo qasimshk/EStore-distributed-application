@@ -1,6 +1,6 @@
 namespace estore.api.Extensions;
 
-using estore.api.Common.Models;
+using estore.api.Common;
 using estore.api.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 

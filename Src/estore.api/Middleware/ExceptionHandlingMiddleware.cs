@@ -1,6 +1,6 @@
 namespace estore.api.Middleware;
 
-using estore.api.Common.Results;
+using estore.common.Common.Results;
 using System.Net;
 using System.Text.Json;
 

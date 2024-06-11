@@ -1,7 +1,7 @@
 namespace estore.api.Models.Aggregates;
 
 using System.Collections.Generic;
-using estore.api.Common.Models;
+using estore.api.Common;
 
 public class Addresses : ValueObject
 {

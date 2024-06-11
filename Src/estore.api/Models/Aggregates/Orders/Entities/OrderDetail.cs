@@ -1,6 +1,6 @@
 namespace estore.api.Models.Aggregates.Orders.Entities;
 
-using estore.api.Common.Models;
+using estore.api.Common;
 using estore.api.Models.Aggregates.Orders.ValueObjects;
 
 public sealed class OrderDetail : Entity<OrderDetailId>

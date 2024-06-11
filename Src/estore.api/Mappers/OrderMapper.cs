@@ -2,7 +2,7 @@ namespace estore.api.Mappers;
 
 using estore.api.Abstractions.Mappers;
 using estore.api.Models.Aggregates.Orders;
-using estore.api.Models.Responses;
+using estore.common.Models.Responses;
 
 public class OrderMapper : IOrderMapper
 {
@@ -20,12 +20,12 @@ public class OrderMapper : IOrderMapper
         OrderDetails = from.OrderDetails.Select(item => new OrderDetailsResponse
         {
             ProductId = item.ProductId,
-            CategoryName = item.Item.Category.CategoryName,
+            CategoryName = item.Item != null ? item.Item.Category.CategoryName : "N/A",
             OrderDetailId = item.Id.Value,
-            ProductName = item.Item.ProductName,
+            ProductName = item.Item != null ? item.Item.ProductName : "N/A",
             Discount = item.Discount,
             Quantity = item.Quantity,
             UnitPrice = item.UnitPrice
-        }).ToList()
+        }).Distinct().ToList()
     };
 }

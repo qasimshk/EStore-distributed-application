@@ -1,9 +1,9 @@
 namespace estore.api.Abstractions.Services;
 
-using estore.api.Common.Pagination;
-using estore.api.Common.Results;
-using estore.api.Models.Requests;
-using estore.api.Models.Responses;
+using estore.common.Common.Pagination;
+using estore.common.Common.Results;
+using estore.common.Models.Requests;
+using estore.common.Models.Responses;
 
 public interface IOrderServices
 {

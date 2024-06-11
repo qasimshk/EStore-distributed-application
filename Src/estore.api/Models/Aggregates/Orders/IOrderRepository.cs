@@ -1,7 +1,7 @@
 namespace estore.api.Models.Aggregates.Orders;
 
 using System.Linq.Expressions;
-using estore.api.Common.Models;
+using estore.api.Common;
 using estore.api.Models.Aggregates.Orders.Entities;
 
 public interface IOrderRepository : IRepository<Order>

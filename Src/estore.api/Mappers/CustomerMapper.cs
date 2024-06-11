@@ -3,8 +3,8 @@ namespace estore.api.Mappers;
 using estore.api.Abstractions.Mappers;
 using estore.api.Models.Aggregates;
 using estore.api.Models.Aggregates.Customer;
-using estore.api.Models.Requests;
-using estore.api.Models.Responses;
+using estore.common.Models.Requests;
+using estore.common.Models.Responses;
 
 public class CustomerMapper : ICustomerMapper
 {
@@ -25,10 +25,10 @@ public class CustomerMapper : ICustomerMapper
             OrderDate = ord.OrderDate.ToShortDateString(),
             OrderId = ord.Id.Value,
             RequiredDate = ord.RequiredDate.ToShortDateString(),
-            ShippedDate = ord.ShippedDate.HasValue ? ord.ShippedDate.Value.ToShortDateString() : null,
+            ShippedDate = ord.ShippedDate.HasValue ? ord.ShippedDate.Value.ToShortDateString() : string.Empty,
             ShippingAddress = ord.ShippingAddress.GetCompleteAddress(),
             ShipVia = ord.ShipVia
-        }).ToList()
+        }).Distinct().ToList()
     };
 
     public Customer Map(CreateCustomerRequest from)
@@ -40,7 +40,7 @@ public class CustomerMapper : ICustomerMapper
             from.ContactTitle, from.Phone, from.Fax, address);
     }
 
-    public CreateCustomerResponse Mapper(Customer customer) => new CreateCustomerResponse
+    public CreateCustomerResponse Mapper(Customer customer) => new()
     {
         CustomerAddress = customer.CustomerAddress.GetCompleteAddress(),
         CompanyName = customer.CompanyName,

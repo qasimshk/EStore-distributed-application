@@ -1,6 +1,6 @@
 namespace estore.api.Persistance.Context;
 
-using estore.api.Common.Models;
+using estore.api.Common;
 using estore.api.Models.Aggregates;
 using estore.api.Models.Aggregates.Customer;
 using estore.api.Models.Aggregates.Employee;

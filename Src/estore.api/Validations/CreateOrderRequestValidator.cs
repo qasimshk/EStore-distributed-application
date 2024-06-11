@@ -3,7 +3,7 @@ namespace estore.api.Validations;
 using estore.api.Models.Aggregates.Customer;
 using estore.api.Models.Aggregates.Employee;
 using estore.api.Models.Aggregates.Orders;
-using estore.api.Models.Requests;
+using estore.common.Models.Requests;
 using FluentValidation;
 using Models.Aggregates.Customer.ValueObjects;
 using Models.Aggregates.Employee.ValueObjects;

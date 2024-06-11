@@ -5,16 +5,16 @@ using System.Net;
 using System.Threading.Tasks;
 using estore.api.Abstractions.Mappers;
 using estore.api.Abstractions.Services;
-using estore.api.Common.Models;
-using estore.api.Common.Pagination;
-using estore.api.Common.Results;
+using estore.api.Common;
 using estore.api.Models.Aggregates;
 using estore.api.Models.Aggregates.Customer;
 using estore.api.Models.Aggregates.Employee;
 using estore.api.Models.Aggregates.Orders;
 using estore.api.Models.Aggregates.Orders.Entities;
-using estore.api.Models.Requests;
-using estore.api.Models.Responses;
+using estore.common.Common.Pagination;
+using estore.common.Common.Results;
+using estore.common.Models.Requests;
+using estore.common.Models.Responses;
 using FluentValidation;
 using Models.Aggregates.Customer.ValueObjects;
 using Models.Aggregates.Employee.ValueObjects;
@@ -110,6 +110,6 @@ public class OrderServices(IOrderRepository orderRepository,
                 break;
             }
         }
-        return _paged.ToPagedList(raw.Select(_orderMapper.Map).AsQueryable(), searchOrder.PageNumber, searchOrder.PageSize);
+        return _paged.ToPagedList(raw.Distinct().Select(_orderMapper.Map).AsQueryable(), searchOrder.PageNumber, searchOrder.PageSize);
     }
 }
