@@ -1,12 +1,9 @@
 namespace estore.common.Models.Requests;
 
-using System;
 using estore.common.Events;
 
 public class CreateCustomerRequest
 {
-    public Guid CorrelationId { get; set; }
-
     public string CompanyName { get; set; } = string.Empty;
 
     public string ContactName { get; set; } = string.Empty;
@@ -38,7 +35,6 @@ public class CreateCustomerRequest
         Fax = create.Fax,
         CompanyName = create.CompanyName,
         ContactName = create.ContactName,
-        ContactTitle = create.ContactTitle,
-        CorrelationId = create.CorrelationId
+        ContactTitle = create.ContactTitle
     };
 }

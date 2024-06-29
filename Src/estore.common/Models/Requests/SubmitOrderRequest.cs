@@ -1,4 +1,10 @@
 namespace estore.common.Models.Requests;
-using estore.common.Events;
 
-public class SubmitOrderRequest : SubmitOrderEvent { }
+public class SubmitOrderRequest
+{
+    public Guid CorrelationId { get; } = Guid.NewGuid();
+
+    public CreateCustomerRequest Customer { get; set; } = new();
+
+    public PlaceOrderRequest Order { get; set; } = new();
+}

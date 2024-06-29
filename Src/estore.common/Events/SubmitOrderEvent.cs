@@ -29,17 +29,36 @@ public class SubmitOrderEvent : BaseEvent
 
     public static SubmitOrderEvent Map(SubmitOrderRequest request) => new()
     {
-        Address = request.Address,
-        City = request.City,
-        Region = request.Region,
-        PostalCode = request.PostalCode,
-        Country = request.Country,
-        OrderDetails = request.OrderDetails,
-        Freight = request.Freight,
-        ShipName = request.ShipName,
+        Address = request.Order.Address,
+        City = request.Order.City,
+        Region = request.Order.Region,
+        PostalCode = request.Order.PostalCode,
+        Country = request.Order.Country,
+        OrderDetails = request.Order.OrderDetailsRequest.Select(x => new OrderDetailsEvent
+        {
+            Discount = x.Discount,
+            ProductId = x.ProductId,
+            Quantity = x.Quantity,
+            UnitPrice = x.UnitPrice
+        }).ToList(),
+        Freight = request.Order.Freight,
+        ShipName = request.Order.ShipName,
         CorrelationId = request.CorrelationId,
-        CreateCustomer = request.CreateCustomer,
-        EmployeeId = request.EmployeeId,
-        ShipVia = request.ShipVia,
+        CreateCustomer = new CreateCustomerEvent
+        {
+            Address = request.Customer.Address,
+            City = request.Customer.City,
+            Region = request.Customer.Region,
+            PostalCode = request.Customer.PostalCode,
+            Country = request.Customer.Country,
+            CompanyName = request.Customer.CompanyName,
+            ContactName = request.Customer.ContactName,
+            ContactTitle = request.Customer.ContactTitle,
+            CorrelationId = request.CorrelationId,
+            Fax = request.Customer.Fax,
+            Phone = request.Customer.Phone
+        },
+        EmployeeId = request.Order.EmployeeId,
+        ShipVia = request.Order.ShipVia,
     };
 }

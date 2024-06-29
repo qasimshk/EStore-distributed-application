@@ -45,47 +45,48 @@
 
 
 
-
-
 {
-  "correlationId": "3fa85f64-5717-4562-b3fc-2c963f66afd2",
-  "createCustomer": {
-  "correlationId": "3fa85f64-5717-4562-b3fc-2c963f66afd2",
-  "companyName": "ABC Ltd",
-  "contactName": "M Qasim",
-  "contactTitle": "Software Engineer",
-  "address": "Greenwich",
-  "city": "London",
-  "region": "Greater London",
-  "postalCode": "SE2 0HF",
-  "country": "UK",
-  "phone": "07415304456",
-  "fax": "300125"
+  "customer": {
+    "companyName": "Dell Public Ltd",
+    "contactName": "M Qasim",
+    "contactTitle": "Software Engineer",
+    "address": "11 Albert street, Greenwich",
+    "city": "London",
+    "region": "Greater London",
+    "postalCode": "SE2 0HF",
+    "country": "United Kingdom",
+    "phone": "1234567890",
+    "fax": "03001234"
   },
-  "employeeId": 5,
-  "shipVia": 2,
-  "freight": 3,
-  "shipName": "Argos Ltd",
-  "address": "11 Albert, road, Greenwich",
-  "city": "London",
-  "region": "Greater London",
-  "postalCode": "SE18 7RU",
-  "country": "United Kingdom",
-  "orderDetails": [
-    {
-      "productId": 13,
-      "unitPrice": 15.00,
-      "quantity": 3,
-      "discount": 0
-    },
-    {
-      "productId": 60,
-      "unitPrice": 16.77,
-      "quantity": 4,
-      "discount": 0
-    }
-  ]
+  "order": {
+    "employeeId": 5,
+    "shipVia": 2,
+    "freight": 3,
+    "shipName": "Argos Pvt Ltd",
+    "address": "11 Albert street, Greenwich",
+    "city": "London",
+    "region": "Greater London",
+    "postalCode": "SE18 7RU",
+    "country": "United Kingdom",
+    "orderDetailsRequest": [
+      {
+        "productId": 13,
+        "unitPrice": 15.22,
+        "quantity": 3,
+        "discount": 2
+      },
+      {
+        "productId": 54,
+        "unitPrice": 16.78,
+        "quantity": 4,
+        "discount": 5
+      },
+      {
+        "productId": 40,
+        "unitPrice": 10.11,
+        "quantity": 1,
+        "discount": 0
+      }
+    ]
+  }
 }
-
-https://github.com/MassTransit/MassTransit/discussions/5267
-https://masstransit.io/support/upgrade

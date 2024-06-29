@@ -7,37 +7,37 @@ public class OrderSubmitValidator : AbstractValidator<SubmitOrderRequest>
 {
     public OrderSubmitValidator()
     {
-        RuleFor(x => x.CreateCustomer.CompanyName)
+        RuleFor(x => x.Customer.CompanyName)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .NotNull()
             .NotEmpty()
             .Length(6, 40);
 
-        RuleFor(x => x.CreateCustomer.ContactName)
+        RuleFor(x => x.Customer.ContactName)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .NotNull()
             .NotEmpty()
             .Length(3, 30);
 
-        RuleFor(x => x.CreateCustomer.ContactTitle)
+        RuleFor(x => x.Customer.ContactTitle)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .NotNull()
             .NotEmpty()
             .Length(5, 30);
 
-        RuleFor(x => x.CreateCustomer.Phone)
+        RuleFor(x => x.Customer.Phone)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .NotNull()
             .NotEmpty()
             .Length(5, 30);
 
-        RuleFor(x => x.EmployeeId)
+        RuleFor(x => x.Order.EmployeeId)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .NotNull()
             .NotEmpty()
             .GreaterThan(0);
 
-        RuleFor(x => x.OrderDetails)
+        RuleFor(x => x.Order.OrderDetailsRequest)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .Must(x => x.Count <= 10).WithMessage("Not more than 10 items are allowed")
             .ForEach(orderDetail =>
@@ -62,17 +62,17 @@ public class OrderSubmitValidator : AbstractValidator<SubmitOrderRequest>
             .NotEmpty()
             .NotNull();
 
-        RuleFor(x => x.ShipVia)
+        RuleFor(x => x.Order.ShipVia)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .NotNull()
             .NotEmpty();
 
-        RuleFor(x => x.Freight)
+        RuleFor(x => x.Order.Freight)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .NotNull()
             .NotEmpty();
 
-        RuleFor(x => x.ShipName)
+        RuleFor(x => x.Order.ShipName)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .NotNull()
             .NotEmpty()
