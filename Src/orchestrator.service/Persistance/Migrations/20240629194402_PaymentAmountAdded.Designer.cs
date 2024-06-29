@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using orchestrator.service.Persistance.Context;
 
@@ -11,9 +12,11 @@ using orchestrator.service.Persistance.Context;
 namespace orchestrator.service.Persistance.Migrations
 {
     [DbContext(typeof(StateDbContext))]
-    partial class StateDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240629194402_PaymentAmountAdded")]
+    partial class PaymentAmountAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

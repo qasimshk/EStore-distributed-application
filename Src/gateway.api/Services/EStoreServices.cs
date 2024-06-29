@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.WebUtilities;
 public class EStoreServices(HttpClient httpClient,
     IValidator<SubmitOrderRequest> validator,
     IRequestClient<OrderStateRequestEvent> orderStateRequest,
+    IRequestClient<PaymentStateRequestEvent> paymentStateRequest,
     IRequestClient<SubmitOrderEvent> submitOrderRequest,
     IRequestClient<RefundOrderEvent> refundOrder,
     IRequestClient<RemoveOrderEvent> removeOrder) : IEStoreServices
@@ -23,6 +24,7 @@ public class EStoreServices(HttpClient httpClient,
     private readonly HttpClient _httpClient = httpClient;
     private readonly IValidator<SubmitOrderRequest> _validator = validator;
     private readonly IRequestClient<OrderStateRequestEvent> _orderStateRequest = orderStateRequest;
+    private readonly IRequestClient<PaymentStateRequestEvent> _paymentStateRequest = paymentStateRequest;
     private readonly IRequestClient<SubmitOrderEvent> _submitOrderRequest = submitOrderRequest;
     private readonly IRequestClient<RefundOrderEvent> _refundOrder = refundOrder;
     private readonly IRequestClient<RemoveOrderEvent> _removeOrder = removeOrder;
@@ -163,6 +165,37 @@ public class EStoreServices(HttpClient httpClient,
             });
         }
         return Results.Accepted();
+    }
+
+    public async Task<IResult> GetPaymentState(Guid correlationId)
+    {
+        var response = await _paymentStateRequest.GetResponse<PaymentStateEvent, PaymentInformationEvent>(new PaymentStateRequestEvent
+        {
+            CorrelationId = correlationId
+        });
+
+        if (response.Is(result: out Response<PaymentStateEvent> paymentFound))
+        {
+            return Results.Ok(new PaymentStateEvent
+            {
+                CorrelationId = paymentFound.Message.CorrelationId,
+                CreatedOn = paymentFound.Message.CreatedOn,
+                CurrentState = paymentFound.Message.CurrentState,
+                ErrorMessage = paymentFound.Message.ErrorMessage,
+                FailedOn = paymentFound.Message.FailedOn,
+                OrderId = paymentFound.Message.OrderId,
+                Amount = paymentFound.Message.Amount,
+            });
+        }
+        else if (response.Is(result: out Response<PaymentInformationEvent> paymentNotFound))
+        {
+            return Results.NotFound(new OrderInformationEvent
+            {
+                CorrelationId = paymentNotFound.Message.CorrelationId,
+                Message = paymentNotFound.Message.Message,
+            });
+        }
+        return Results.BadRequest();
     }
 
     public async Task<IResult> GetOrderState(Guid correlationId)

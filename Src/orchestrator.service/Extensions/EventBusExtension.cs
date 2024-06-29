@@ -22,16 +22,10 @@ internal static class EventBusExtension
         services.AddMassTransit(cfg =>
         {
             cfg.AddSagaStateMachine<OrderStateMachine, OrderState>()
-                    .EntityFrameworkRepository(ef =>
-                    {
-                        ef.ConcurrencyMode = ConcurrencyMode.Pessimistic;
-                        ef.AddDbContext<DbContext, StateDbContext>((provider, builder) =>
-                            builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlOptions =>
-                            {
-                                sqlOptions.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
-                                sqlOptions.MigrationsHistoryTable($"__{nameof(StateDbContext)}");
-                            }));
-                    });
+                .EntityFrameworkRepository(ef => ef.AddEntityFrameworkConfiguration(configuration));
+
+            cfg.AddSagaStateMachine<PaymentStateMachine, PaymentState>()
+                .EntityFrameworkRepository(ef => ef.AddEntityFrameworkConfiguration(configuration));
 
             cfg.AddConsumersFromNamespaceContaining<CreateCustomerConsumer>();
 
@@ -39,5 +33,19 @@ internal static class EventBusExtension
         });
 
         return services;
+    }
+
+    private static IEntityFrameworkSagaRepositoryConfigurator AddEntityFrameworkConfiguration(this IEntityFrameworkSagaRepositoryConfigurator config, IConfiguration configuration)
+    {
+        config.ConcurrencyMode = ConcurrencyMode.Pessimistic;
+
+        config.AddDbContext<DbContext, StateDbContext>((provider, builder) =>
+            builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlOptions =>
+            {
+                sqlOptions.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
+                sqlOptions.MigrationsHistoryTable($"__{nameof(StateDbContext)}");
+            }));
+
+        return config;
     }
 }

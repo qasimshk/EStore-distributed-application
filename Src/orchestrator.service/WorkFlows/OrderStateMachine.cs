@@ -18,34 +18,34 @@ public class OrderStateMachine : MassTransitStateMachine<OrderState>
     public State OrderRefund { get; set; }
 
     // Events
-    public Event<SubmitOrderEvent> SubmitOrderEvents { get; set; }
-    public Event<OrderSubmittedEvent> OrderSubmittedEvents { get; set; }
-    public Event<CreateCustomerEvent> CreateCustomerEvents { get; set; }
     public Event<CustomerCreatedSuccessfullyEvent> CustomerCreatedSuccessfullyEvents { get; set; }
-    public Event<VerifyEmployeeEvent> VerifyEmployeeEvents { get; set; }
-    public Event<EmployeeVerifiedEvent> EmployeeVerifiedEvents { get; set; }
-    public Event<OrderStateRequestEvent> OrderStateRequestEvents { get; set; }
-    public Event<CreateOrderEvent> CreateOrderEvents { get; set; }
     public Event<OrderCreatedSuccessfullyEvent> OrderCreatedSuccessfullyEvents { get; set; }
     public Event<SendCustomerNotificationEvent> SendCustomerNotificationEvents { get; set; }
-    public Event<FailedEvent> FailedEvents { get; set; }
+    public Event<OrderStateRequestEvent> OrderStateRequestEvents { get; set; }
+    public Event<EmployeeVerifiedEvent> EmployeeVerifiedEvents { get; set; }
+    public Event<OrderSubmittedEvent> OrderSubmittedEvents { get; set; }
+    public Event<CreateCustomerEvent> CreateCustomerEvents { get; set; }
+    public Event<VerifyEmployeeEvent> VerifyEmployeeEvents { get; set; }
+    public Event<CreateOrderEvent> CreateOrderEvents { get; set; }
     public Event<RefundOrderEvent> RefundOrderEvents { get; set; }
     public Event<RemoveOrderEvent> RemoveOrderEvents { get; set; }
+    public Event<SubmitOrderEvent> SubmitOrderEvents { get; set; }
+    public Event<FailedEvent> FailedEvents { get; set; }
 
     public OrderStateMachine()
     {
         InstanceState(s => s.CurrentState);
 
-        Event(() => SubmitOrderEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
-        Event(() => OrderSubmittedEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
-        Event(() => CreateCustomerEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
         Event(() => CustomerCreatedSuccessfullyEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
-        Event(() => EmployeeVerifiedEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
-        Event(() => VerifyEmployeeEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
-        Event(() => FailedEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
-        Event(() => CreateOrderEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
         Event(() => OrderCreatedSuccessfullyEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
         Event(() => SendCustomerNotificationEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
+        Event(() => EmployeeVerifiedEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
+        Event(() => OrderSubmittedEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
+        Event(() => CreateCustomerEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
+        Event(() => VerifyEmployeeEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
+        Event(() => CreateOrderEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
+        Event(() => SubmitOrderEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
+        Event(() => FailedEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
 
         Event(() => OrderStateRequestEvents, order =>
         {

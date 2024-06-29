@@ -9,7 +9,9 @@ public class StateDbContext : SagaDbContext
 {
     public StateDbContext(DbContextOptions<StateDbContext> options) : base(options) { }
 
-    public DbSet<OrderState> Services { get; set; }
+    public DbSet<OrderState> OrderStates { get; set; }
+
+    public DbSet<PaymentState> PaymentStates { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,7 +21,11 @@ public class StateDbContext : SagaDbContext
 
     protected override IEnumerable<ISagaClassMap> Configurations
     {
-        get { yield return new StateEntityTypeConfiguration(); }
+        get
+        {
+            yield return new OrderStateEntityTypeConfiguration();
+            yield return new PaymentStateEntityTypeConfiguration();
+        }
     }
 }
 

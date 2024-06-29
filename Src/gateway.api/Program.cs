@@ -72,6 +72,14 @@ public class Program
            .Produces<OrderStateEvent>((int)HttpStatusCode.OK)
            .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
 
+        app.MapGet("/order/{correlationId}:Guid/payment", async (
+           [FromRoute] Guid correlationId,
+           [FromServices] IEStoreServices service) => await service.GetPaymentState(correlationId))
+           .WithName("PaymentState")
+           .WithTags("Order")
+           .Produces<PaymentStateEvent>((int)HttpStatusCode.OK)
+           .Produces<PaymentInformationEvent>((int)HttpStatusCode.NotFound);
+
         app.MapGet("/order/{correlationId}:Guid/refund", async (
            [FromRoute] Guid correlationId,
            [FromServices] IEStoreServices service) => await service.RefundOrder(correlationId))

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using orchestrator.service.Persistance.Entities;
 
-public class StateEntityTypeConfiguration : SagaClassMap<OrderState>
+public class OrderStateEntityTypeConfiguration : SagaClassMap<OrderState>
 {
     protected override void Configure(EntityTypeBuilder<OrderState> entity, ModelBuilder model)
     {
