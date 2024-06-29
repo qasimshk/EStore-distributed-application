@@ -165,7 +165,7 @@ public class ServiceStateMachine : MassTransitStateMachine<OrderState>
             elseActivity => elseActivity.RespondAsync(x => x.Init<OrderNotFoundEvent>(new OrderNotFoundEvent
             {
                 CorrelationId = x.Saga.CorrelationId,
-                Message = "Only complete order can be refunded!"
+                Message = "Only completed orders can be refunded!"
             })))
             .RespondAsync(x => x.Init<OrderStateEvent>(new OrderStateEvent
             {
@@ -178,5 +178,14 @@ public class ServiceStateMachine : MassTransitStateMachine<OrderState>
                 ErrorMessage = x.Saga.ErrorMessage,
                 FailedOn = x.Saga.FailedOn
             })));
+
+        WhenEnter(OrderRefund, binder => binder
+            .Then(x => StaticMethod.PrintMessage("Order has been refunded successfully!"))
+            .Publish(context => new SendCustomerNotificationEvent
+            {
+                CustomerId = context.Saga.CustomerId!,
+            }));
+
+        SetCompletedWhenFinalized();
     }
 }
