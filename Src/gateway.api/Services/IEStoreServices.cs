@@ -17,4 +17,6 @@ public interface IEStoreServices
     Task<IResult> GetOrderState(Guid correlationId);
 
     Task<IResult> RefundOrder(Guid correlationId);
+
+    Task<IResult> RemoveOrder(Guid correlationId);
 }

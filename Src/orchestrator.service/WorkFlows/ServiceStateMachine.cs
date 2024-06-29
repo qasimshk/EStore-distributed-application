@@ -30,6 +30,7 @@ public class ServiceStateMachine : MassTransitStateMachine<OrderState>
     public Event<SendCustomerNotificationEvent> SendCustomerNotificationEvents { get; set; }
     public Event<FailedEvent> FailedEvents { get; set; }
     public Event<RefundOrderEvent> RefundOrderEvents { get; set; }
+    public Event<RemoveOrderEvent> RemoveOrderEvents { get; set; }
 
     public ServiceStateMachine()
     {
@@ -53,7 +54,7 @@ public class ServiceStateMachine : MassTransitStateMachine<OrderState>
             {
                 if (context.RequestId.HasValue)
                 {
-                    await context.RespondAsync<OrderNotFoundEvent>(new
+                    await context.RespondAsync<OrderInformationEvent>(new
                     {
                         context.Message.CorrelationId,
                         Message = "Order not found"
@@ -69,7 +70,23 @@ public class ServiceStateMachine : MassTransitStateMachine<OrderState>
             {
                 if (context.RequestId.HasValue)
                 {
-                    await context.RespondAsync<OrderNotFoundEvent>(new
+                    await context.RespondAsync<OrderInformationEvent>(new
+                    {
+                        context.Message.CorrelationId,
+                        Message = "Order not found"
+                    });
+                }
+            }));
+        });
+
+        Event(() => RemoveOrderEvents, order =>
+        {
+            order.CorrelateById(order => order.Message.CorrelationId);
+            order.OnMissingInstance(order => order.ExecuteAsync(async context =>
+            {
+                if (context.RequestId.HasValue)
+                {
+                    await context.RespondAsync<OrderInformationEvent>(new
                     {
                         context.Message.CorrelationId,
                         Message = "Order not found"
@@ -159,10 +176,18 @@ public class ServiceStateMachine : MassTransitStateMachine<OrderState>
                 FailedOn = x.Saga.FailedOn
             })),
 
+            When(RemoveOrderEvents)
+            .Then(x => StaticMethod.PrintMessage("Order has been removed successfully!"))
+            .RespondAsync(x => x.Init<OrderInformationEvent>(new OrderInformationEvent
+            {
+                CorrelationId = x.Saga.CorrelationId
+            }))
+            .Finalize(),
+
             When(RefundOrderEvents)
             .IfElse(context => context.Saga.CurrentState == nameof(Completed),
             ifActivity => ifActivity.TransitionTo(OrderRefund),
-            elseActivity => elseActivity.RespondAsync(x => x.Init<OrderNotFoundEvent>(new OrderNotFoundEvent
+            elseActivity => elseActivity.RespondAsync(x => x.Init<OrderInformationEvent>(new OrderInformationEvent
             {
                 CorrelationId = x.Saga.CorrelationId,
                 Message = "Only completed orders can be refunded!"

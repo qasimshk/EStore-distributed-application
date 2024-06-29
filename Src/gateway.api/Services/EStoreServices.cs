@@ -17,13 +17,15 @@ public class EStoreServices(HttpClient httpClient,
     IValidator<SubmitOrderRequest> validator,
     IRequestClient<OrderStateRequestEvent> orderStateRequest,
     IRequestClient<SubmitOrderEvent> submitOrderRequest,
-    IRequestClient<RefundOrderEvent> refundOrder) : IEStoreServices
+    IRequestClient<RefundOrderEvent> refundOrder,
+    IRequestClient<RemoveOrderEvent> removeOrder) : IEStoreServices
 {
     private readonly HttpClient _httpClient = httpClient;
     private readonly IValidator<SubmitOrderRequest> _validator = validator;
     private readonly IRequestClient<OrderStateRequestEvent> _orderStateRequest = orderStateRequest;
     private readonly IRequestClient<SubmitOrderEvent> _submitOrderRequest = submitOrderRequest;
     private readonly IRequestClient<RefundOrderEvent> _refundOrder = refundOrder;
+    private readonly IRequestClient<RemoveOrderEvent> _removeOrder = removeOrder;
 
     public async Task<IResult> GetCustomerById(string customerId)
     {
@@ -115,7 +117,7 @@ public class EStoreServices(HttpClient httpClient,
 
     public async Task<IResult> RefundOrder(Guid correlationId)
     {
-        var response = await _refundOrder.GetResponse<OrderStateEvent, OrderNotFoundEvent>(new RefundOrderEvent
+        var response = await _refundOrder.GetResponse<OrderStateEvent, OrderInformationEvent>(new RefundOrderEvent
         {
             CorrelationId = correlationId
         });
@@ -134,9 +136,9 @@ public class EStoreServices(HttpClient httpClient,
                 OrderId = orderRefunded.Message.OrderId,
             });
         }
-        else if (response.Is(result: out Response<OrderNotFoundEvent> orderNotFound))
+        else if (response.Is(result: out Response<OrderInformationEvent> orderNotFound))
         {
-            return Results.NotFound(new OrderNotFoundEvent
+            return Results.NotFound(new OrderInformationEvent
             {
                 CorrelationId = orderNotFound.Message.CorrelationId,
                 Message = orderNotFound.Message.Message,
@@ -145,9 +147,27 @@ public class EStoreServices(HttpClient httpClient,
         return Results.BadRequest();
     }
 
+    public async Task<IResult> RemoveOrder(Guid correlationId)
+    {
+        var response = await _removeOrder.GetResponse<OrderInformationEvent>(new RemoveOrderEvent
+        {
+            CorrelationId = correlationId
+        });
+
+        if (!string.IsNullOrEmpty(response.Message.Message))
+        {
+            return Results.NotFound(new OrderInformationEvent
+            {
+                CorrelationId = response.Message.CorrelationId,
+                Message = response.Message.Message,
+            });
+        }
+        return Results.Accepted();
+    }
+
     public async Task<IResult> GetOrderState(Guid correlationId)
     {
-        var response = await _orderStateRequest.GetResponse<OrderStateEvent, OrderNotFoundEvent>(new OrderStateRequestEvent
+        var response = await _orderStateRequest.GetResponse<OrderStateEvent, OrderInformationEvent>(new OrderStateRequestEvent
         {
             CorrelationId = correlationId
         });
@@ -166,9 +186,9 @@ public class EStoreServices(HttpClient httpClient,
                 OrderId = orderFound.Message.OrderId,
             });
         }
-        else if (response.Is(result: out Response<OrderNotFoundEvent> orderNotFound))
+        else if (response.Is(result: out Response<OrderInformationEvent> orderNotFound))
         {
-            return Results.NotFound(new OrderNotFoundEvent
+            return Results.NotFound(new OrderInformationEvent
             {
                 CorrelationId = orderNotFound.Message.CorrelationId,
                 Message = orderNotFound.Message.Message,

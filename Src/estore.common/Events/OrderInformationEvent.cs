@@ -1,6 +1,6 @@
 namespace estore.common.Events;
 
-public class OrderNotFoundEvent : BaseEvent
+public class OrderInformationEvent : BaseEvent
 {
     public string Message { get; set; } = string.Empty;
 }

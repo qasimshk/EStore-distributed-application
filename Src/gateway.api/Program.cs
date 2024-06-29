@@ -70,7 +70,7 @@ public class Program
            .WithName("GetOrderState")
            .WithTags("Order")
            .Produces<OrderStateEvent>((int)HttpStatusCode.OK)
-           .Produces<OrderNotFoundEvent>((int)HttpStatusCode.NotFound);
+           .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
 
         app.MapGet("/order/{correlationId}:Guid/refund", async (
            [FromRoute] Guid correlationId,
@@ -78,7 +78,15 @@ public class Program
            .WithName("RefundOrder")
            .WithTags("Order")
            .Produces<OrderStateEvent>((int)HttpStatusCode.OK)
-           .Produces<OrderNotFoundEvent>((int)HttpStatusCode.NotFound);
+           .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
+
+        app.MapDelete("/order/{correlationId}:Guid/remove", async (
+           [FromRoute] Guid correlationId,
+           [FromServices] IEStoreServices service) => await service.RemoveOrder(correlationId))
+           .WithName("RemoveOrder")
+           .WithTags("Order")
+           .Produces((int)HttpStatusCode.Accepted)
+           .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
 
         app.MapPost("/order", async (
            [FromBody] SubmitOrderRequest request,

@@ -28,6 +28,8 @@ public static class EventBusExtension
             config.AddRequestClient<OrderStateRequestEvent>();
 
             config.AddRequestClient<RefundOrderEvent>();
+
+            config.AddRequestClient<RemoveOrderEvent>();
         });
 
         services.Configure<MassTransitHostOptions>(options =>
