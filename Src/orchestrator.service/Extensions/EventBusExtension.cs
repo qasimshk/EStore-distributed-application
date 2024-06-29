@@ -21,7 +21,7 @@ internal static class EventBusExtension
 
         services.AddMassTransit(cfg =>
         {
-            cfg.AddSagaStateMachine<ServiceStateMachine, OrderState>()
+            cfg.AddSagaStateMachine<OrderStateMachine, OrderState>()
                     .EntityFrameworkRepository(ef =>
                     {
                         ef.ConcurrencyMode = ConcurrencyMode.Pessimistic;

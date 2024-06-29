@@ -6,7 +6,7 @@ using MassTransit;
 using orchestrator.service.Extensions;
 using orchestrator.service.Persistance.Entities;
 
-public class ServiceStateMachine : MassTransitStateMachine<OrderState>
+public class OrderStateMachine : MassTransitStateMachine<OrderState>
 {
     // States
     public State OrderSubmitted { get; set; }
@@ -32,7 +32,7 @@ public class ServiceStateMachine : MassTransitStateMachine<OrderState>
     public Event<RefundOrderEvent> RefundOrderEvents { get; set; }
     public Event<RemoveOrderEvent> RemoveOrderEvents { get; set; }
 
-    public ServiceStateMachine()
+    public OrderStateMachine()
     {
         InstanceState(s => s.CurrentState);
 
