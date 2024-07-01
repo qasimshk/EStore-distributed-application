@@ -176,15 +176,15 @@ public class EStoreServices(HttpClient httpClient,
 
         if (response.Is(result: out Response<PaymentStateEvent> paymentFound))
         {
-            return Results.Ok(new PaymentStateEvent
+            return Results.Ok(new
             {
-                CorrelationId = paymentFound.Message.CorrelationId,
-                CreatedOn = paymentFound.Message.CreatedOn,
-                CurrentState = paymentFound.Message.CurrentState,
-                ErrorMessage = paymentFound.Message.ErrorMessage,
-                FailedOn = paymentFound.Message.FailedOn,
-                OrderId = paymentFound.Message.OrderId,
-                Amount = paymentFound.Message.Amount,
+                paymentFound.Message.CorrelationId,
+                paymentFound.Message.CreatedOn,
+                paymentFound.Message.CurrentState,
+                paymentFound.Message.OrderId,
+                Amount = $"£{paymentFound.Message.Amount}",
+                paymentFound.Message.ErrorMessage,
+                paymentFound.Message.FailedOn,
             });
         }
         else if (response.Is(result: out Response<PaymentInformationEvent> paymentNotFound))
