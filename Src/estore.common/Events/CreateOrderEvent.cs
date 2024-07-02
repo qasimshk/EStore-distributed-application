@@ -47,6 +47,5 @@ public class CreateOrderEvent : BaseEvent
         OrderDate = DateTime.Now,
         OrderDetailsRequest = submit.OrderDetails
     };
-
 }
 

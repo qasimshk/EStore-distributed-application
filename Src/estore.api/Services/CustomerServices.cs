@@ -36,7 +36,7 @@ public class CustomerServices(
 
             _customerRepository.Add(customer);
 
-            var resp = await _unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync();
 
             return Result<CreateCustomerResponse>.SuccessResult(_customerMapper.Mapper(customer));
         }

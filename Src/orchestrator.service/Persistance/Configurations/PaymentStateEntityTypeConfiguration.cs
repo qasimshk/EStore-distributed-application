@@ -21,6 +21,7 @@ public class PaymentStateEntityTypeConfiguration : SagaClassMap<PaymentState>
             .IsRequired();
 
         entity.Property(x => x.Amount)
+            .HasColumnType("money")
             .IsRequired();
 
         entity.Property(x => x.CreatedOn)
