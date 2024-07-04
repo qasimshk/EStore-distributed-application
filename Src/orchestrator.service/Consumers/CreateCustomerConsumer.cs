@@ -16,7 +16,7 @@ public class CreateCustomerConsumer(IEStoreService eStoreService) : IConsumer<Cr
 
         if (result.IsSuccess)
         {
-            await context.Publish(new CustomerCreatedSuccessfullyEvent
+            await context.RespondAsync(new CustomerCreatedSuccessfullyEvent
             {
                 CorrelationId = context.Message.CorrelationId,
                 CustomerId = result.Value.CustomerID
@@ -24,7 +24,7 @@ public class CreateCustomerConsumer(IEStoreService eStoreService) : IConsumer<Cr
         }
         else
         {
-            await context.Publish(new FailedEvent
+            await context.RespondAsync(new FailedEvent
             {
                 CorrelationId = context.Message.CorrelationId,
                 ConsumerName = nameof(CreateCustomerConsumer),

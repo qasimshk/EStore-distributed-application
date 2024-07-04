@@ -19,7 +19,7 @@ public class NotificationConsumer : IConsumer<SendCustomerNotificationEvent>
         }
         catch (Exception ex)
         {
-            await context.Publish(new FailedEvent
+            await context.RespondAsync(new FailedEvent
             {
                 CorrelationId = context.Message.CorrelationId,
                 ConsumerName = nameof(CreateCustomerConsumer),

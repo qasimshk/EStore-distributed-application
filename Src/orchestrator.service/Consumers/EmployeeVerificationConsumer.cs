@@ -15,7 +15,7 @@ public class EmployeeVerificationConsumer(IEStoreService eStoreService) : IConsu
 
         if (response.IsSuccess)
         {
-            await context.Publish(new EmployeeVerifiedEvent
+            await context.RespondAsync(new EmployeeVerifiedEvent
             {
                 CorrelationId = context.Message.CorrelationId,
                 EmployeeId = context.Message.EmployeeId,
@@ -24,7 +24,7 @@ public class EmployeeVerificationConsumer(IEStoreService eStoreService) : IConsu
         }
         else
         {
-            await context.Publish(new FailedEvent
+            await context.RespondAsync(new FailedEvent
             {
                 CorrelationId = context.Message.CorrelationId,
                 ConsumerName = nameof(EmployeeVerificationConsumer),
