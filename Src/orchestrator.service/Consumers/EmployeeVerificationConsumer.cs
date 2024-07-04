@@ -31,5 +31,6 @@ public class EmployeeVerificationConsumer(IEStoreService eStoreService) : IConsu
                 ErrorMessage = response.ErrorMessage
             });
         }
+        return;
     }
 }

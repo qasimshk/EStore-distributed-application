@@ -37,7 +37,7 @@ internal static class EventBusExtension
 
     private static IEntityFrameworkSagaRepositoryConfigurator AddEntityFrameworkConfiguration(this IEntityFrameworkSagaRepositoryConfigurator config, IConfiguration configuration)
     {
-        config.ConcurrencyMode = ConcurrencyMode.Pessimistic;
+        config.ConcurrencyMode = ConcurrencyMode.Optimistic;
 
         config.AddDbContext<DbContext, StateDbContext>((provider, builder) =>
             builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlOptions =>

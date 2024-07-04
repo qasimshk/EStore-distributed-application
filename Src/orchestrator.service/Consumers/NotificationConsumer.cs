@@ -26,5 +26,6 @@ public class NotificationConsumer : IConsumer<SendCustomerNotificationEvent>
                 ErrorMessage = ex.ToString()
             });
         }
+        return;
     }
 }

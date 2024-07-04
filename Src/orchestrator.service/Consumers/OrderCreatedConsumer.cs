@@ -31,5 +31,6 @@ public class OrderCreatedConsumer(IEStoreService eStoreService) : IConsumer<Crea
                 ErrorMessage = response.ErrorMessage
             });
         }
+        return;
     }
 }

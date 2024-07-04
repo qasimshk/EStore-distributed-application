@@ -2,6 +2,7 @@ namespace orchestrator.service.Persistance.Context;
 
 using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using orchestrator.service.Persistance.Configurations;
 using orchestrator.service.Persistance.Entities;
 
@@ -27,6 +28,9 @@ public class StateDbContext : SagaDbContext
             yield return new PaymentStateEntityTypeConfiguration();
         }
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.ConfigureWarnings(w => w.Ignore(SqlServerEventId.SavepointsDisabledBecauseOfMARS));
 }
 
 // Add-Migration CreateDatabase -OutputDir "Persistance/Migrations"
