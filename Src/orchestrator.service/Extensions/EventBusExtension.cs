@@ -29,6 +29,9 @@ internal static class EventBusExtension
 
             cfg.AddConsumersFromNamespaceContaining<CreateCustomerConsumer>();
 
+            cfg.AddConfigureEndpointsCallback((name, cfg) =>
+                cfg.UseMessageRetry(r => r.Immediate(2)));
+
             cfg.AddBusConfigurator(settings);
         });
 
