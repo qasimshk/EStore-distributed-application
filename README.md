@@ -30,7 +30,7 @@ In summary, both patterns have their own advantages and disadvantages. Orchestra
 ### Project Setup:
 - Install [Microsoft .Net 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 - Open solution in Visual Studio.
-- Navigate to the project opened in visual studio and expand the database folder, execute both script files one by one to setup both the databases.
+- Navigate to the project opened in visual studio and expand the database folder, execute both script files one by one to setup both the databases (NOTE: scripts files are generated using SQL 2022).
 - Set database connection string in appsettings.josn for both estore api and orchestrator service.
 - Set RabbitMQ configuration ( either URL or host name, user & password ) in both gateway api and orchestrator service.
 - Set visual studio to start multiple projects and make sure orchestrator service, gateway api & estore api are set as start.
