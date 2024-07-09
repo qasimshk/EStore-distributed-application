@@ -28,6 +28,7 @@ public class Program
                     }
                     cfg.AddEnvironmentVariables().Build();
                 })
+                .ConfigureLogging(config => config.ClearProviders())
                 .ConfigureServices((hostContext, services) => services
                         .AddServiceConfiguration(hostContext.Configuration)
                         .AddEventBus(hostContext.Configuration)
