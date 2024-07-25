@@ -2,7 +2,6 @@ namespace estore.api;
 
 using System.Net;
 using System.Reflection;
-using estore.api.Common;
 using estore.api.Extensions;
 using estore.api.Middleware;
 using estore.api.Models.Aggregates.Employee;
