@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Persistance\Migrations\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
   <ItemGroup>
