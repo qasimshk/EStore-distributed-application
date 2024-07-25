@@ -104,3 +104,9 @@ In summary, both patterns have their own advantages and disadvantages. Orchestra
 - SQL Server
 - MassTransit
 
+<!-- 
+qasim.kainos@gmail.com - gateway
+vzimsim@gmail.com - orchestrator
+savvysavingsapp@gmail.com - api 
+https://www.monsterasp.net/
+-->
