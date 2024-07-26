@@ -2,7 +2,7 @@
 
 ### Introduction - [Online Demo](http://gateway.runasp.net/swagger/index.html)
 
-The EStore distributed system project is developed (using [MassTransit](https://masstransit.io/)) to explain the concept of orchestration microservice architecture & sagas patterns. As the name says this orchestrator service is responsible for the workflow of each asynchronous transaction. The payload sent by the gateway API is stored in the database and an entry is created. The created entry state is updated on each successful response sent by the consuming microservices.
+The EStore distributed system project is developed (using [MassTransit](https://masstransit.io/)) to explain the concept of orchestration microservice architecture & sagas patterns. As the name says this orchestrator api is responsible for the workflow of each asynchronous transaction. The payload sent by the gateway API is stored in the database and an entry is created. The created entry state is updated on each successful response sent by the consuming microservices.
 
 ![](https://github.com/qasimshk/EStore/blob/main/Database/EStore%20Design.drawio.png)
 
@@ -37,9 +37,9 @@ In summary, both patterns have their own advantages and disadvantages. Orchestra
 - Install [Microsoft .Net 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 - Open solution in Visual Studio.
 - Navigate to the project opened in visual studio and expand the database folder, execute both script files one by one to setup both the databases (NOTE: scripts files are generated using SQL 2022).
-- Set database connection string in appsettings.josn for both estore api and orchestrator service.
-- Set RabbitMQ configuration ( either URL or host name, user & password ) in both gateway api and orchestrator service.
-- Set visual studio to start multiple projects and make sure orchestrator service, gateway api & estore api are set as start.
+- Set database connection string in appsettings.josn for both estore api and orchestrator api.
+- Set RabbitMQ configuration ( either URL or host name, user & password ) in both gateway api and orchestrator api.
+- Set visual studio to start multiple projects and make sure orchestrator api, gateway api & estore api are set as start.
 
 ### Project user guide:
 - Place an order using the request below in swagger post order.
