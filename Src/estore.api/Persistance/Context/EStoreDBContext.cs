@@ -5,6 +5,7 @@ using estore.api.Models.Aggregates;
 using estore.api.Models.Aggregates.Customer;
 using estore.api.Models.Aggregates.Employee;
 using estore.api.Models.Aggregates.Orders;
+using estore.api.Models.Aggregates.Orders.Entities;
 using Microsoft.EntityFrameworkCore;
 
 public class EStoreDBContext : DbContext, IUnitOfWork
@@ -12,6 +13,8 @@ public class EStoreDBContext : DbContext, IUnitOfWork
     public EStoreDBContext(DbContextOptions<EStoreDBContext> options) : base(options) { }
 
     public DbSet<Order> Orders { get; set; }
+
+    public DbSet<OrderDetail> OrderDetails { get; set; }
 
     public DbSet<Category> Categories { get; set; }
 

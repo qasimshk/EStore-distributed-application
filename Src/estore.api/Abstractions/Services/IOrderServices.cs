@@ -12,4 +12,6 @@ public interface IOrderServices
     PagedList<OrderResponse> GetOrderBySearch(SearchOrderRequest searchOrder);
 
     Task<Result<OrderResponse>> CreateOrder(CreateOrderRequest createOrder);
+
+    Task<Result> DeleteOrder(int orderId);
 }

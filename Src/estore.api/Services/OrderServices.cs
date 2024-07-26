@@ -112,4 +112,18 @@ public class OrderServices(IOrderRepository orderRepository,
         }
         return _paged.ToPagedList(raw.Distinct().Select(_orderMapper.Map).AsQueryable(), searchOrder.PageNumber, searchOrder.PageSize);
     }
+
+    public async Task<Result> DeleteOrder(int orderId)
+    {
+        var order = await _orderRepository.FindByConditionAsync(x => x.Id == new OrderId(orderId));
+
+        if (order.Any())
+        {
+            await _orderRepository.DeleteOrder(orderId);
+
+            return Result.SuccessResult();
+        }
+
+        return Result.FailedResult(["Order not found with this Id"], HttpStatusCode.NotFound);
+    }
 }

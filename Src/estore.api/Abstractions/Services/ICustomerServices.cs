@@ -12,4 +12,6 @@ public interface ICustomerServices
     PagedList<CustomerResponse> GetCustomers(SearchCustomerRequest search);
 
     Task<Result<CreateCustomerResponse>> CreateCustomer(CreateCustomerRequest customerRequest);
+
+    Task<Result> DeleteCustomer(string customerId);
 }

@@ -58,4 +58,14 @@ public class CustomerController(ICustomerServices customerServices) : Controller
             CreatedAtRoute(nameof(GetCustomerByCustomerId), new { customerId = result.Value }, result) :
             BadRequest(result);
     }
+
+    [HttpDelete("delete/{customerId}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType(typeof(Result), (int)HttpStatusCode.NotFound)]
+    public async Task<IActionResult> DeleteCustomer([FromRoute] string customerId)
+    {
+        var result = await _customerServices.DeleteCustomer(customerId);
+
+        return result.IsSuccess ? NoContent() : NotFound(result);
+    }
 }

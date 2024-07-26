@@ -3,6 +3,7 @@ namespace estore.api.Controllers;
 using System.Net;
 using System.Text.Json;
 using estore.api.Abstractions.Services;
+using estore.api.Services;
 using estore.common.Common.Pagination;
 using estore.common.Common.Results;
 using estore.common.Models.Requests;
@@ -56,5 +57,15 @@ public class OrderController(IOrderServices orderServices) : Controller
         return result.IsSuccess ?
             CreatedAtRoute(nameof(GetOrderByOrderId), new { orderId = result.Value.OrderId }, result) :
             BadRequest(result);
+    }
+
+    [HttpDelete("delete/{orderId}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    [ProducesResponseType(typeof(Result), (int)HttpStatusCode.NotFound)]
+    public async Task<IActionResult> DeleteOrder([FromRoute] int orderId)
+    {
+        var result = await _orderServices.DeleteOrder(orderId);
+
+        return result.IsSuccess ? NoContent() : NotFound(result);
     }
 }

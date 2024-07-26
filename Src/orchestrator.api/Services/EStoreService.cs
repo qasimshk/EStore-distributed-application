@@ -40,4 +40,18 @@ public class EStoreService(HttpClient httpClient) : IEStoreService
 
         return (await response.Content.ReadFromJsonAsync<Result<EmployeeResponse>>())!;
     }
+
+    public async Task<Result> DeleteCustomer(string customerId)
+    {
+        var response = await _httpClient.DeleteAsync($"customer/delete/{customerId}");
+
+        return (await response.Content.ReadFromJsonAsync<Result>())!;
+    }
+
+    public async Task<Result> DeleteOrder(int orderId)
+    {
+        var response = await _httpClient.DeleteAsync($"order/delete/{orderId}");
+
+        return (await response.Content.ReadFromJsonAsync<Result>())!;
+    }
 }

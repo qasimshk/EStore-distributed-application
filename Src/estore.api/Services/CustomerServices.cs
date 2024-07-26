@@ -81,4 +81,18 @@ public class CustomerServices(
 
         return _paged.ToPagedList(customers.Distinct().Select(_customerMapper.Map).AsQueryable(), search.PageNumber, search.PageSize);
     }
+
+    public async Task<Result> DeleteCustomer(string customerId)
+    {
+        var customer = await _customerRepository.FindByConditionAsync(x => x.Id == new CustomerId(customerId.Trim()));
+
+        if (customer.Any())
+        {
+            await _customerRepository.DeleteCustomer(customerId.Trim());
+
+            return Result.SuccessResult();
+        }
+
+        return Result.FailedResult(["Customer not found with this Id"], HttpStatusCode.NotFound);
+    }
 }

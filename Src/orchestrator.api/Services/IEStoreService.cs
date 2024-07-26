@@ -11,4 +11,8 @@ public interface IEStoreService
     Task<Result<OrderResponse>> CreateOrder(CreateOrderRequest request);
 
     Task<Result<EmployeeResponse>> GetEmployeeById(int employeeId);
+
+    Task<Result> DeleteCustomer(string customerId);
+
+    Task<Result> DeleteOrder(int orderId);
 }

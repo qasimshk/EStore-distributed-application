@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using estore.api.Models.Aggregates;
 using estore.api.Models.Aggregates.Orders;
 using estore.api.Models.Aggregates.Orders.Entities;
+using estore.api.Models.Aggregates.Orders.ValueObjects;
 using estore.api.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,4 +36,18 @@ public class OrderRepository(EStoreDBContext context) : IOrderRepository
         .Include(pro => pro.Category)
         .Where(expression)
         .ToListAsync();
+
+    public async Task DeleteOrder(int orderId)
+    {
+        var order = await _context.Orders
+            .Include(ord => ord.OrderDetails)
+            .Where(ord => ord.Id == new OrderId(orderId))
+            .SingleAsync();
+
+        _context.OrderDetails.RemoveRange(order.OrderDetails);
+
+        _context.Orders.Remove(order);
+
+        await _context.SaveChangesAsync();
+    }
 }

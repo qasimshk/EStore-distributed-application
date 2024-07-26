@@ -21,6 +21,7 @@ public class OrderStateMachine : MassTransitStateMachine<OrderState>
     public Event<CustomerCreatedSuccessfullyEvent> CustomerCreatedSuccessfullyEvents { get; set; }
     public Event<OrderCreatedSuccessfullyEvent> OrderCreatedSuccessfullyEvents { get; set; }
     public Event<SendCustomerNotificationEvent> SendCustomerNotificationEvents { get; set; }
+    public Event<DeleteOrderWithCustomerEvent> DeleteOrderWithCustomerEvents { get; set; }
     public Event<OrderStateRequestEvent> OrderStateRequestEvents { get; set; }
     public Event<EmployeeVerifiedEvent> EmployeeVerifiedEvents { get; set; }
     public Event<OrderSubmittedEvent> OrderSubmittedEvents { get; set; }
@@ -39,6 +40,7 @@ public class OrderStateMachine : MassTransitStateMachine<OrderState>
         Event(() => CustomerCreatedSuccessfullyEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
         Event(() => OrderCreatedSuccessfullyEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
         Event(() => SendCustomerNotificationEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
+        Event(() => DeleteOrderWithCustomerEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
         Event(() => EmployeeVerifiedEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
         Event(() => OrderSubmittedEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
         Event(() => CreateCustomerEvents, order => order.CorrelateById(x => x.Message.CorrelationId));
@@ -178,6 +180,12 @@ public class OrderStateMachine : MassTransitStateMachine<OrderState>
 
             When(RemoveOrderEvents)
             .Then(x => StaticMethod.PrintMessage("Order has been removed successfully!"))
+            .Publish(context => new DeleteOrderWithCustomerEvent
+            {
+                CorrelationId = context.Saga.CorrelationId,
+                OrderId = context.Saga.OrderId ?? 0,
+                CustomerId = context.Saga?.CustomerId ?? string.Empty,
+            })
             .RespondAsync(x => x.Init<OrderInformationEvent>(new OrderInformationEvent
             {
                 CorrelationId = x.Saga.CorrelationId

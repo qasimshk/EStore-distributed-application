@@ -9,4 +9,6 @@ public interface IOrderRepository : IRepository<Order>
     void AddOrderDetails(List<OrderDetail> orderDetails);
 
     Task<IEnumerable<Product>> Products(Expression<Func<Product, bool>> expression);
+
+    Task DeleteOrder(int orderId);
 }

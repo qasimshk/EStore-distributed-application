@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using estore.api.Models.Aggregates.Customer;
+using estore.api.Models.Aggregates.Customer.ValueObjects;
 using estore.api.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,4 +25,14 @@ public class CustomerRepository(EStoreDBContext context) : ICustomerRepository
         .ThenInclude(ord => ord.Employee);
 
     public void Update(Customer entity) => _context.Update(entity);
+
+    public async Task DeleteCustomer(string customerId)
+    {
+        var customer = await _context.Customers
+            .SingleAsync(cus => cus.Id == new CustomerId(customerId));
+
+        _context.Customers.Remove(customer);
+
+        await _context.SaveChangesAsync();
+    }
 }
