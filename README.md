@@ -48,7 +48,7 @@ In summary, both patterns have their own advantages and disadvantages. Orchestra
 - Complete order can be refunded using correclation Id.
 - All orders including payment state records can be removed using correlation Id. 
 
-#### Order Request
+#### Order Request - NOTE: try it twice as it take few attempts to warm up the services
 ```http
 {
   "customer": {
