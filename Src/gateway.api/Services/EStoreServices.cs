@@ -109,6 +109,7 @@ public class EStoreServices(HttpClient httpClient,
 
         if (result.IsValid)
         {
+            // This can be avoided by simply implementing an api gateway NuGet like Ocelot
             if (!await GetOrchestratorHealthCheck())
             {
                 return Results.BadRequest("Service temporary unavailable!");
@@ -126,6 +127,7 @@ public class EStoreServices(HttpClient httpClient,
 
     public async Task<IResult> RefundOrder(Guid correlationId)
     {
+        // This can be avoided by simply implementing an api gateway NuGet like Ocelot
         if (!await GetOrchestratorHealthCheck())
         {
             return Results.BadRequest("Service temporary unavailable!");
@@ -163,6 +165,7 @@ public class EStoreServices(HttpClient httpClient,
 
     public async Task<IResult> RemoveOrder(Guid correlationId)
     {
+        // This can be avoided by simply implementing an api gateway NuGet like Ocelot
         if (!await GetOrchestratorHealthCheck())
         {
             return Results.BadRequest("Service temporary unavailable!");
@@ -186,6 +189,7 @@ public class EStoreServices(HttpClient httpClient,
 
     public async Task<IResult> GetPaymentState(Guid correlationId)
     {
+        // This can be avoided by simply implementing an api gateway NuGet like Ocelot
         if (!await GetOrchestratorHealthCheck())
         {
             return Results.BadRequest("Service temporary unavailable!");
@@ -222,6 +226,7 @@ public class EStoreServices(HttpClient httpClient,
 
     public async Task<IResult> GetOrderState(Guid correlationId)
     {
+        // This can be avoided by simply implementing an api gateway NuGet like Ocelot
         if (!await GetOrchestratorHealthCheck())
         {
             return Results.BadRequest("Service temporary unavailable!");
