@@ -19,7 +19,8 @@ public class EStoreServices(HttpClient httpClient,
     IRequestClient<PaymentStateRequestEvent> paymentStateRequest,
     IRequestClient<SubmitOrderEvent> submitOrderRequest,
     IRequestClient<RefundOrderEvent> refundOrder,
-    IRequestClient<RemoveOrderEvent> removeOrder) : IEStoreServices
+    IRequestClient<RemoveOrderEvent> removeOrder,
+    IConfiguration configuration) : IEStoreServices
 {
     private readonly HttpClient _httpClient = httpClient;
     private readonly IValidator<SubmitOrderRequest> _validator = validator;
@@ -28,6 +29,7 @@ public class EStoreServices(HttpClient httpClient,
     private readonly IRequestClient<SubmitOrderEvent> _submitOrderRequest = submitOrderRequest;
     private readonly IRequestClient<RefundOrderEvent> _refundOrder = refundOrder;
     private readonly IRequestClient<RemoveOrderEvent> _removeOrder = removeOrder;
+    private readonly IConfiguration _configuration = configuration;
 
     public async Task<IResult> GetCustomerById(string customerId)
     {
@@ -107,6 +109,11 @@ public class EStoreServices(HttpClient httpClient,
 
         if (result.IsValid)
         {
+            if (!await GetOrchestratorHealthCheck())
+            {
+                return Results.BadRequest("Service temporary unavailable!");
+            }
+
             var request = SubmitOrderEvent.Map(submit);
 
             var response = await _submitOrderRequest.GetResponse<OrderSubmittedEvent>(request);
@@ -119,6 +126,11 @@ public class EStoreServices(HttpClient httpClient,
 
     public async Task<IResult> RefundOrder(Guid correlationId)
     {
+        if (!await GetOrchestratorHealthCheck())
+        {
+            return Results.BadRequest("Service temporary unavailable!");
+        }
+
         var response = await _refundOrder.GetResponse<OrderStateEvent, OrderInformationEvent>(new RefundOrderEvent
         {
             CorrelationId = correlationId
@@ -151,6 +163,11 @@ public class EStoreServices(HttpClient httpClient,
 
     public async Task<IResult> RemoveOrder(Guid correlationId)
     {
+        if (!await GetOrchestratorHealthCheck())
+        {
+            return Results.BadRequest("Service temporary unavailable!");
+        }
+
         var response = await _removeOrder.GetResponse<OrderInformationEvent>(new RemoveOrderEvent
         {
             CorrelationId = correlationId
@@ -169,6 +186,11 @@ public class EStoreServices(HttpClient httpClient,
 
     public async Task<IResult> GetPaymentState(Guid correlationId)
     {
+        if (!await GetOrchestratorHealthCheck())
+        {
+            return Results.BadRequest("Service temporary unavailable!");
+        }
+
         var response = await _paymentStateRequest.GetResponse<PaymentStateEvent, PaymentInformationEvent>(new PaymentStateRequestEvent
         {
             CorrelationId = correlationId
@@ -200,6 +222,11 @@ public class EStoreServices(HttpClient httpClient,
 
     public async Task<IResult> GetOrderState(Guid correlationId)
     {
+        if (!await GetOrchestratorHealthCheck())
+        {
+            return Results.BadRequest("Service temporary unavailable!");
+        }
+
         var response = await _orderStateRequest.GetResponse<OrderStateEvent, OrderInformationEvent>(new OrderStateRequestEvent
         {
             CorrelationId = correlationId
@@ -253,4 +280,17 @@ public class EStoreServices(HttpClient httpClient,
     }
 
     private static string GetMetaDataValue(string value) => value.Split(':').Last().Replace("}", "");
+
+    private async Task<bool> GetOrchestratorHealthCheck()
+    {
+        var serviceUrl = _configuration.GetSection("OrchestratorHealthCheck").Value!;
+
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        var response = await client.GetAsync(serviceUrl);
+
+        return response.IsSuccessStatusCode;
+    }
 }

@@ -13,6 +13,7 @@ builder.Services
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -20,6 +21,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+app.MapHealthChecks("/health");
 
 app.MapGet("/ping", () => Results.Ok(DateTime.Now.ToShortDateString()))
 .WithName("Check")
