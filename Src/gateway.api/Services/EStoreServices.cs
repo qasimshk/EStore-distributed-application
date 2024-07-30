@@ -20,7 +20,8 @@ public class EStoreServices(HttpClient httpClient,
     IRequestClient<SubmitOrderEvent> submitOrderRequest,
     IRequestClient<RefundOrderEvent> refundOrder,
     IRequestClient<RemoveOrderEvent> removeOrder,
-    IConfiguration configuration) : IEStoreServices
+    IConfiguration configuration,
+    IHttpClientFactory httpClientFactory) : IEStoreServices
 {
     private readonly HttpClient _httpClient = httpClient;
     private readonly IValidator<SubmitOrderRequest> _validator = validator;
@@ -30,6 +31,7 @@ public class EStoreServices(HttpClient httpClient,
     private readonly IRequestClient<RefundOrderEvent> _refundOrder = refundOrder;
     private readonly IRequestClient<RemoveOrderEvent> _removeOrder = removeOrder;
     private readonly IConfiguration _configuration = configuration;
+    private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
 
     public async Task<IResult> GetCustomerById(string customerId)
     {
@@ -289,13 +291,8 @@ public class EStoreServices(HttpClient httpClient,
     private async Task<bool> GetOrchestratorHealthCheck()
     {
         var serviceUrl = _configuration.GetSection("OrchestratorHealthCheck").Value!;
-
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
+        var client = _httpClientFactory.CreateClient("OrchestratorAPI");
         var response = await client.GetAsync(serviceUrl);
-
         return response.IsSuccessStatusCode;
     }
 }
