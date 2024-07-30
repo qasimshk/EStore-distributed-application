@@ -44,7 +44,7 @@
 
   <ItemGroup>
     <Folder Include="Integrations\" />
-    <Folder Include="Units\Validation\" />
+    <Folder Include="Units\Validations\" />
   </ItemGroup>
 
 </Project>
