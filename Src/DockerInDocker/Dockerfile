@@ -6,6 +6,4 @@ COPY . .
 
 RUN dotnet restore
 
-readlink -f ./estore.api.tests/estore.api.tests.csproj
-
 CMD dotnet test "./estore.api.tests/estore.api.tests.csproj"
