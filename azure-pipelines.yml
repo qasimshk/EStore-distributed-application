@@ -8,7 +8,7 @@ pool:
 
 variables:
   imageName: 'estore-docker-image'
-  dockerfilePath: '/EStore-distributed-application/Src/DockerInDocker/Dockerfile'
+  dockerfilePath: 'Src/DockerInDocker/Dockerfile'
 
 jobs:
 - job: BuildAndRunDockerImage
