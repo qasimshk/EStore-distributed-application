@@ -17,9 +17,3 @@ jobs:
         command: test
         projects: $(solution)
         arguments: --configuration Release --logger trx --collect:"XPlat Code Coverage"
-
-  steps:
-  - script: |
-      echo hello from Linux
-      dotnet Build
-    displayName: 'Run DotNet Build'
