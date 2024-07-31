@@ -1,3 +1,5 @@
+
+[![Build Status](https://dev.azure.com/CematixSolutions/Artificial%20Intelligence/_apis/build/status%2Fqasimshk.EStore-distributed-application?branchName=main)](https://dev.azure.com/CematixSolutions/Artificial%20Intelligence/_build/latest?definitionId=40&branchName=main)
 # EStore Distributed System
 
 ### Introduction - [Online Demo](http://gateway.runasp.net/swagger/index.html)

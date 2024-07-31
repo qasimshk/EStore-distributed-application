@@ -8,7 +8,7 @@ pool:
 
 variables:
   imageName: 'estore-docker-image'
-  dockerfilePath: 'AzureDocker/Dockerfile'
+  dockerfilePath: 'DockerInDocker/Dockerfile'
 
 jobs:
 - job: BuildAndRunDockerImage
