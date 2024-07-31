@@ -1,10 +1,13 @@
-name: .NET
+name: Build
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
+env:
+  DOTNET_VERSION: "8.0.x"
 
 jobs:
   build:
@@ -16,13 +19,16 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore
       working-directory: Src/
       run: dotnet restore 
+
     - name: Build
       working-directory: Src/
       run: dotnet build --no-restore
+
     - name: Test
       working-directory: Src/
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --configuration Release --no-build --verbosity normal

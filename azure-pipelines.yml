@@ -6,14 +6,30 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-jobs:
-- job: BuildAndRunDockerImage
-  steps:
-  - checkout: self
-        
-  - task: DotNetCoreCLI@2
-    displayName: test
-    inputs:
-        command: test
-        projects: $(solution)
-        arguments: --configuration Release --logger trx --collect:"XPlat Code Coverage"
+variables:
+  solution: '**/*.sln'
+
+- task: UseDotNet@2
+  inputs:
+    version: '8.x'
+    includePreviewVersions: true # Required for preview versions
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    configuration: $(buildConfiguration)
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: 'test'
+    arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura'
+    publishTestResults: true
+    projects: '$(solution)/estore.api.tests/estore.api.tests.proj' # update with your test project directory
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage report'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
