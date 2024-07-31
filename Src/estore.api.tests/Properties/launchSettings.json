@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "estore.api.tests": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
