@@ -29,7 +29,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 Database", "05 Database"
 		..\Database\Orchestrator Script.sql = ..\Database\Orchestrator Script.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "orchestrator.api", "orchestrator.api\orchestrator.api.csproj", "{9BD9AC4A-ADB8-43DF-8E6C-41EC47306096}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "orchestrator.api", "orchestrator.api\orchestrator.api.csproj", "{9BD9AC4A-ADB8-43DF-8E6C-41EC47306096}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{85258780-244F-4A5D-BCB4-387FE57AE8B4}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\.github\workflows\build.yml = ..\.github\workflows\build.yml
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

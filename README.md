@@ -1,7 +1,4 @@
 
-[![Build Status](https://dev.azure.com/CematixSolutions/Artificial%20Intelligence/_apis/build/status%2Fqasimshk.EStore-distributed-application?branchName=main)](https://dev.azure.com/CematixSolutions/Artificial%20Intelligence/_build/latest?definitionId=40&branchName=main)
-# EStore Distributed System
-
 ### Introduction - [Online Demo](http://gateway.runasp.net/swagger/index.html)
 
 The EStore distributed system project is developed (using [MassTransit](https://masstransit.io/)) to explain the concept of orchestration microservice architecture & sagas patterns. As the name says this orchestrator api is responsible for the workflow of each asynchronous transaction. The payload sent by the gateway API is stored in the database and an entry is created. The created entry state is updated on each successful response sent by the consuming microservices.
