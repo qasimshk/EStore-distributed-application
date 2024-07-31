@@ -21,7 +21,7 @@ resources:
     ref: main
 
 jobs:
-- job: Job_1
+- job: 
   displayName: Job
   pool:
     vmImage: ubuntu-latest
@@ -30,26 +30,26 @@ jobs:
     clean: true
     fetchTags: false
 
-  - task: DotNetCoreCLI@2
+  - task: 
     displayName: Restore
     inputs:
       command: restore
       projects: $(BuildParameters.RestoreBuildProjects)
 
-  - task: DotNetCoreCLI@2
+  - task:
     displayName: Build
     inputs:
       projects: $(BuildParameters.RestoreBuildProjects)
       arguments: --configuration $(BuildConfiguration)
 
-  - task: DotNetCoreCLI@2
+  - task:
     displayName: Test
     inputs:
       command: test
       projects: $(BuildParameters.TestProjects)
       arguments: --configuration $(BuildConfiguration)
 
-  - task: DotNetCoreCLI@2
+  - task:
     displayName: Publish
     inputs:
       command: publish
@@ -58,7 +58,7 @@ jobs:
       arguments: --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)
       zipAfterPublish: True
       
-  - task: PublishBuildArtifacts@1
+  - task:
     displayName: Publish Artifact
     condition: succeededOrFailed()
     inputs:
