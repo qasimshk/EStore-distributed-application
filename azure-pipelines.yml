@@ -8,20 +8,21 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-
+  
 steps:
-
     - task: UseDotNet@2 
       displayName: ".NET Core 8.0.x"
       inputs:
         version: '8.0.x'
         packageType: sdk
+        workingDirectory: 'Src/'
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'dotnet build $(buildConfiguration)'
 
     - task: DotNetCoreCLI@2
       displayName: "Test"
       inputs:
+        workingDirectory: 'Src/'
         command: test
         projects: '**/*tests/*.csproj'
         arguments: '--configuration $(buildConfiguration)'
@@ -29,6 +30,7 @@ steps:
     - task: DotNetCoreCLI@2
       displayName: "Publish"
       inputs:
+        workingDirectory: 'Src/'
         command: 'publish'
         publishWebProjects: true
         arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
@@ -37,5 +39,6 @@ steps:
     - task: PublishBuildArtifacts@1
       displayName: "Upload Artifacts"
       inputs:
+        workingDirectory: 'Src/'
         pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
         artifactName: 'hanselminutes' 
