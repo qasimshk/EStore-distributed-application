@@ -1,0 +1,25 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/employee/{everything}",
+      "ServiceName": "estore",
+      "UpstreamPathTemplate": "/gateway/employee/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "estore"
+    },
+    {
+      "DownstreamPathTemplate": "/api/customer/{everything}",
+      "ServiceName": "estore",
+      "UpstreamPathTemplate": "/gateway/customer/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "estore"
+    },
+    {
+      "DownstreamPathTemplate": "/api/order/{everything}",
+      "ServiceName": "estore",
+      "UpstreamPathTemplate": "/gateway/order/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "estore"
+    }
+  ]
+}

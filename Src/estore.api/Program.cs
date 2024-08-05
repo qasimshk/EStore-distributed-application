@@ -52,7 +52,7 @@ public class Program
                 }).Single())) :
                 Results.NotFound(Result<EmployeeResponse>.FailedResult($"Employee not found with Id:{employeeId}", HttpStatusCode.NotFound));
         })
-         .WithTags("Employee")
+         .WithTags("General")
          .Produces<Result<EmployeeResponse>>((int)HttpStatusCode.OK)
          .Produces<Result<EmployeeResponse>>((int)HttpStatusCode.NotFound);
 

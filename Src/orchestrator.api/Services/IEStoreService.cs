@@ -15,4 +15,14 @@ public interface IEStoreService
     Task<Result> DeleteCustomer(string customerId);
 
     Task<Result> DeleteOrder(int orderId);
+
+    Task<IResult> SubmitOrder(SubmitOrderRequest submit);
+
+    Task<IResult> GetOrderState(Guid correlationId);
+
+    Task<IResult> RefundOrder(Guid correlationId);
+
+    Task<IResult> RemoveOrder(Guid correlationId);
+
+    Task<IResult> GetPaymentState(Guid correlationId);
 }

@@ -1,0 +1,30 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "orchestrator",
+      "Config": [
+        {
+          "Name": "Command API",
+          "Version": "v1",
+          "Service": {
+            "Name": "orchestrator",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "estore",
+      "Config": [
+        {
+          "Name": "Query API",
+          "Version": "v1",
+          "Service": {
+            "Name": "estore",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    }
+  ]
+}

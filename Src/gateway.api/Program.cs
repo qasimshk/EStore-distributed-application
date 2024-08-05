@@ -1,105 +1,35 @@
-namespace gateway.api;
+using MMLib.Ocelot.Provider.AppConfiguration;
+using MMLib.SwaggerForOcelot.DependencyInjection;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
-using System.Net;
-using estore.common.Common.Pagination;
-using estore.common.Common.Results;
-using estore.common.Models.Requests;
-using estore.common.Models.Responses;
-using FluentValidation;
-using gateway.api.Extensions;
-using gateway.api.Services;
-using Microsoft.AspNetCore.Mvc;
-using estore.common.Events;
-
-public class Program
+var builder = WebApplication.CreateBuilder(args);
 {
-    public static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
+    builder.Configuration.AddOcelotWithSwaggerSupport((opt) => opt.Folder = "Configuration");
 
-        builder.Services
-            .AddApplicationDependencies(builder.Configuration)
-            .AddEventBusService(builder.Configuration);
+    builder.Services.AddOcelot().AddAppConfiguration();
 
-        var app = builder.Build();
+    builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
-        app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EStore Api"));
+    builder.Services.AddControllers();
 
-        app.MapGet("/customer/{customerId}", async (
-            [FromRoute] string customerId,
-            [FromServices] IEStoreServices service) => await service.GetCustomerById(customerId))
-            .WithName("GetCustomerById")
-            .WithTags("Customer")
-            .Produces<Result<CustomerResponse>>((int)HttpStatusCode.OK)
-            .Produces<Result>((int)HttpStatusCode.NotFound);
-
-        app.MapGet("/customer/search", async (
-            [AsParameters] SearchCustomerRequest search,
-            [FromServices] IEStoreServices service,
-            HttpContext http) => await service.GetCustomerBySearch(search, http))
-            .WithName("GetCustomerBySearchParameters")
-            .WithTags("Customer")
-            .Produces<PagedList<CustomerResponse>>((int)HttpStatusCode.OK)
-            .Produces((int)HttpStatusCode.NotFound);
-
-        app.MapGet("/order/{orderId}:int", async (
-           [FromRoute] int orderId,
-           [FromServices] IEStoreServices service) => await service.GetOrderByOrderId(orderId))
-           .WithName("GetOrderByOrderId")
-           .WithTags("Order")
-           .Produces<Result<OrderResponse>>((int)HttpStatusCode.OK)
-           .Produces<Result>((int)HttpStatusCode.NotFound);
-
-        app.MapGet("/order/search", async (
-            [AsParameters] SearchOrderRequest search,
-            [FromServices] IEStoreServices service,
-            HttpContext http) => await service.GetOrderBySearch(search, http))
-            .WithName("GetOrderBySearch")
-            .WithTags("Order")
-            .Produces<PagedList<OrderResponse>>((int)HttpStatusCode.OK)
-            .Produces((int)HttpStatusCode.NotFound);
-
-        app.MapGet("/order/{correlationId}:Guid/state", async (
-           [FromRoute] Guid correlationId,
-           [FromServices] IEStoreServices service) => await service.GetOrderState(correlationId))
-           .WithName("GetOrderState")
-           .WithTags("Order")
-           .Produces<OrderStateEvent>((int)HttpStatusCode.OK)
-           .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
-
-        app.MapGet("/order/{correlationId}:Guid/payment/state", async (
-           [FromRoute] Guid correlationId,
-           [FromServices] IEStoreServices service) => await service.GetPaymentState(correlationId))
-           .WithName("PaymentState")
-           .WithTags("Order")
-           .Produces<PaymentStateEvent>((int)HttpStatusCode.OK)
-           .Produces<PaymentInformationEvent>((int)HttpStatusCode.NotFound);
-
-        app.MapGet("/order/{correlationId}:Guid/refund", async (
-           [FromRoute] Guid correlationId,
-           [FromServices] IEStoreServices service) => await service.RefundOrder(correlationId))
-           .WithName("RefundOrder")
-           .WithTags("Order")
-           .Produces<OrderStateEvent>((int)HttpStatusCode.OK)
-           .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
-
-        app.MapDelete("/order/{correlationId}:Guid/remove", async (
-           [FromRoute] Guid correlationId,
-           [FromServices] IEStoreServices service) => await service.RemoveOrder(correlationId))
-           .WithName("RemoveOrder")
-           .WithTags("Order")
-           .Produces((int)HttpStatusCode.Accepted)
-           .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
-
-        app.MapPost("/order", async (
-           [FromBody] SubmitOrderRequest request,
-           [FromServices] IEStoreServices service) => await service.SubmitOrder(request))
-           .WithName("SubmitOrder")
-           .WithTags("Order")
-           .Produces<Result<OrderResponse>>((int)HttpStatusCode.OK)
-           .Produces<Result>((int)HttpStatusCode.BadRequest);
-
-        app.Run();
-    }
+    builder.Services.AddSwaggerGen();
 }
+
+var app = builder.Build();
+{
+    app.UseRouting();
+
+    app.UseSwagger();
+
+    app.MapControllers();
+
+    app.UseStaticFiles();
+
+    app.UseSwaggerForOcelotUI(opt => opt.DownstreamSwaggerHeaders =
+    [
+        new KeyValuePair<string, string>("Key", "Value")
+    ]).UseOcelot().Wait();
+}
+
+app.Run();

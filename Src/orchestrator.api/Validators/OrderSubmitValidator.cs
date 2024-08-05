@@ -1,4 +1,4 @@
-namespace gateway.api.Validator;
+namespace orchestrator.api.Validators;
 
 using estore.common.Models.Requests;
 using FluentValidation;

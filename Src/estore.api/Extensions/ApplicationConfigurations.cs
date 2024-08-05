@@ -7,6 +7,7 @@ using estore.common.Common.Pagination;
 using estore.common.Common.Results;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 public static class ApplicationConfigurations
 {
@@ -31,7 +32,7 @@ public static class ApplicationConfigurations
 
         services.AddEndpointsApiExplorer();
 
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "EStore API", Version = "v1" }));
 
         // Middlewares
         services.AddTransient<ExceptionHandlingMiddleware>();

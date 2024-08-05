@@ -10,6 +10,7 @@ using orchestrator.api.Persistance.Entities;
 using orchestrator.api.WorkFlows;
 using orchestrator.api.Consumers;
 using orchestrator.api.Persistance.Context;
+using estore.common.Events;
 
 internal static class EventBusExtension
 {
@@ -33,6 +34,12 @@ internal static class EventBusExtension
                 cfg.UseMessageRetry(r => r.Immediate(2)));
 
             cfg.AddBusConfigurator(settings);
+
+            cfg.AddRequestClient<SubmitOrderEvent>();
+            cfg.AddRequestClient<RefundOrderEvent>();
+            cfg.AddRequestClient<RemoveOrderEvent>();
+            cfg.AddRequestClient<OrderStateRequestEvent>();
+            cfg.AddRequestClient<PaymentStateRequestEvent>();
         });
 
         return services;
