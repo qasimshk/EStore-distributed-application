@@ -4,6 +4,7 @@ using estore.common.Events;
 using estore.common.Models.Requests;
 using MassTransit;
 using orchestrator.api.Services;
+using System.Net;
 
 public class CreateCustomerConsumer(IEStoreService eStoreService) : IConsumer<CreateCustomerEvent>
 {
@@ -11,24 +12,37 @@ public class CreateCustomerConsumer(IEStoreService eStoreService) : IConsumer<Cr
 
     public async Task Consume(ConsumeContext<CreateCustomerEvent> context)
     {
-        var result = await _eStoreService.CreateCustomer(CreateCustomerRequest.Map(context.Message));
+        var customer = await _eStoreService.GetCustomerByPhoneNumber(context.Message.Phone);
 
-        if (result.IsSuccess)
+        if (customer.StatusCode == HttpStatusCode.OK)
         {
             await context.RespondAsync(new CustomerCreatedSuccessfullyEvent
             {
                 CorrelationId = context.Message.CorrelationId,
-                CustomerId = result.Value.CustomerID
+                CustomerId = customer.Value.CustomerId
             });
         }
         else
         {
-            await context.RespondAsync(new FailedEvent
+            var result = await _eStoreService.CreateCustomer(CreateCustomerRequest.Map(context.Message));
+
+            if (result.IsSuccess)
             {
-                CorrelationId = context.Message.CorrelationId,
-                ConsumerName = nameof(CreateCustomerConsumer),
-                ErrorMessage = result.ErrorMessage
-            });
+                await context.RespondAsync(new CustomerCreatedSuccessfullyEvent
+                {
+                    CorrelationId = context.Message.CorrelationId,
+                    CustomerId = result.Value.CustomerID
+                });
+            }
+            else
+            {
+                await context.RespondAsync(new FailedEvent
+                {
+                    CorrelationId = context.Message.CorrelationId,
+                    ConsumerName = nameof(CreateCustomerConsumer),
+                    ErrorMessage = result.ErrorMessage
+                });
+            }
         }
         return;
     }

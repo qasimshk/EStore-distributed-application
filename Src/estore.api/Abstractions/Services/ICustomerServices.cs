@@ -9,6 +9,8 @@ public interface ICustomerServices
 {
     Task<Result<CustomerResponse>> GetCustomerByCustomerId(string customerId);
 
+    Task<Result<CustomerResponse>> GetCustomerByPhoneNumber(string phoneNumber);
+
     PagedList<CustomerResponse> GetCustomers(SearchCustomerRequest search);
 
     Task<Result<CreateCustomerResponse>> CreateCustomer(CreateCustomerRequest customerRequest);

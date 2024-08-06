@@ -25,7 +25,7 @@ app.UseSwaggerUI();
 
 app.MapHealthChecks("/health");
 
-app.MapGet("/api/payment/{correlationId}:Guid/state", async (
+app.MapGet("/api/payments/{correlationId}:Guid/state", async (
    [FromRoute] Guid correlationId,
    [FromServices] IEStoreService service) => await service.GetPaymentState(correlationId))
    .WithName("PaymentState")
@@ -33,7 +33,21 @@ app.MapGet("/api/payment/{correlationId}:Guid/state", async (
    .Produces<PaymentStateEvent>((int)HttpStatusCode.OK)
    .Produces<PaymentInformationEvent>((int)HttpStatusCode.NotFound);
 
-app.MapGet("/api/order-submitted/{correlationId}:Guid/state", async (
+app.MapGet("/api/payments/all/state", async (
+   [FromServices] IEStoreService service) => await service.GetAllPayments())
+   .WithName("PaymentAll")
+   .WithTags("Payment")
+   .Produces<PaymentStateEvent>((int)HttpStatusCode.OK)
+   .Produces<PaymentInformationEvent>((int)HttpStatusCode.NotFound);
+
+app.MapGet("/api/orders-submitted/all/state", async (
+   [FromServices] IEStoreService service) => await service.GetAllOrders())
+   .WithName("OrderAll")
+   .WithTags("Order")
+   .Produces<OrderStateEvent>((int)HttpStatusCode.OK)
+   .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
+
+app.MapGet("/api/orders-submitted/{correlationId}:Guid/state", async (
    [FromRoute] Guid correlationId,
    [FromServices] IEStoreService service) => await service.GetOrderState(correlationId))
    .WithName("OrderState")
@@ -41,7 +55,7 @@ app.MapGet("/api/order-submitted/{correlationId}:Guid/state", async (
    .Produces<OrderStateEvent>((int)HttpStatusCode.OK)
    .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
 
-app.MapGet("/api/order-submitted/{correlationId}:Guid/refund", async (
+app.MapGet("/api/orders-submitted/{correlationId}:Guid/refund", async (
    [FromRoute] Guid correlationId,
    [FromServices] IEStoreService service) => await service.RefundOrder(correlationId))
    .WithName("RefundOrder")
@@ -49,7 +63,7 @@ app.MapGet("/api/order-submitted/{correlationId}:Guid/refund", async (
    .Produces<OrderStateEvent>((int)HttpStatusCode.OK)
    .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
 
-app.MapDelete("/api/order-submitted/{correlationId}:Guid/remove", async (
+app.MapDelete("/api/orders-submitted/{correlationId}:Guid/remove", async (
    [FromRoute] Guid correlationId,
    [FromServices] IEStoreService service) => await service.RemoveOrder(correlationId))
    .WithName("RemoveOrder")
@@ -57,7 +71,7 @@ app.MapDelete("/api/order-submitted/{correlationId}:Guid/remove", async (
    .Produces((int)HttpStatusCode.Accepted)
    .Produces<OrderInformationEvent>((int)HttpStatusCode.NotFound);
 
-app.MapPost("/api/order", async (
+app.MapPost("/api/orders", async (
    [FromBody] SubmitOrderRequest request,
    [FromServices] IEStoreService service) => await service.SubmitOrder(request))
    .WithName("SubmitOrder")

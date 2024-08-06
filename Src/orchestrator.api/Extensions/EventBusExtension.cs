@@ -1,21 +1,25 @@
 namespace orchestrator.api.Extensions;
 
 using System.Reflection;
+using estore.common.Events;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using orchestrator.api.Configurations;
-using orchestrator.api.Persistance.Entities;
-using orchestrator.api.WorkFlows;
 using orchestrator.api.Consumers;
 using orchestrator.api.Persistance.Context;
-using estore.common.Events;
+using orchestrator.api.Persistance.Entities;
+using orchestrator.api.WorkFlows;
 
 internal static class EventBusExtension
 {
     public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddDbContext<StateDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlOptions =>
+            sqlOptions.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null)));
+
         var settings = configuration.GetSection(nameof(EventBusSetting)).Get<EventBusSetting>()!;
 
         services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);

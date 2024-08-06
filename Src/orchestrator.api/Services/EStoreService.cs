@@ -7,6 +7,8 @@ using estore.common.Models.Responses;
 using FluentValidation;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using orchestrator.api.Persistance.Context;
 using System;
 using System.Net;
 using System.Text;
@@ -18,7 +20,8 @@ public class EStoreService(HttpClient httpClient,
     IRequestClient<PaymentStateRequestEvent> paymentStateRequest,
     IRequestClient<SubmitOrderEvent> submitOrderRequest,
     IRequestClient<RefundOrderEvent> refundOrder,
-    IRequestClient<RemoveOrderEvent> removeOrder) : IEStoreService
+    IRequestClient<RemoveOrderEvent> removeOrder,
+    StateDbContext dbContext) : IEStoreService
 {
     private readonly HttpClient _httpClient = httpClient;
     private readonly IValidator<SubmitOrderRequest> _validator = validator;
@@ -27,6 +30,7 @@ public class EStoreService(HttpClient httpClient,
     private readonly IRequestClient<SubmitOrderEvent> _submitOrderRequest = submitOrderRequest;
     private readonly IRequestClient<RefundOrderEvent> _refundOrder = refundOrder;
     private readonly IRequestClient<RemoveOrderEvent> _removeOrder = removeOrder;
+    private readonly StateDbContext _dbContext = dbContext;
 
     public async Task<Result<CreateCustomerResponse>> CreateCustomer(CreateCustomerRequest request)
     {
@@ -64,6 +68,13 @@ public class EStoreService(HttpClient httpClient,
         var response = await _httpClient.DeleteAsync($"customer/delete/{customerId}");
 
         return (await response.Content.ReadFromJsonAsync<Result>())!;
+    }
+
+    public async Task<Result<CustomerResponse>> GetCustomerByPhoneNumber(string phoneNumber)
+    {
+        var response = await _httpClient.GetAsync($"customer/phone/{phoneNumber}");
+
+        return (await response.Content.ReadFromJsonAsync<Result<CustomerResponse>>())!;
     }
 
     public async Task<Result> DeleteOrder(int orderId)
@@ -168,6 +179,39 @@ public class EStoreService(HttpClient httpClient,
             });
         }
         return Results.BadRequest();
+    }
+
+    public async Task<IResult> GetAllOrders()
+    {
+        var orders = await _dbContext.OrderStates.Select(order => new OrderStateEvent
+        {
+            CorrelationId = order.CorrelationId,
+            CreatedOn = order.CreatedOn,
+            CurrentState = order.CurrentState,
+            CustomerId = order.CustomerId ?? string.Empty,
+            EmployeeId = order.EmployeeId ?? 0,
+            ErrorMessage = order.ErrorMessage,
+            FailedOn = order.FailedOn,
+            OrderId = order.OrderId ?? 0,
+        }).ToListAsync();
+
+        return orders.Count != 0 ? Results.Ok(orders) : Results.NotFound();
+    }
+
+    public async Task<IResult> GetAllPayments()
+    {
+        var payment = await _dbContext.PaymentStates.Select(pay => new
+        {
+            pay.CorrelationId,
+            pay.CreatedOn,
+            pay.CurrentState,
+            pay.OrderId,
+            Amount = $"£{pay.Amount}",
+            pay.ErrorMessage,
+            pay.FailedOn,
+        }).ToListAsync();
+
+        return payment.Count != 0 ? Results.Ok(payment) : Results.NotFound();
     }
 
     public async Task<IResult> GetOrderState(Guid correlationId)

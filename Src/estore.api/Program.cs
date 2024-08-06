@@ -2,12 +2,17 @@ namespace estore.api;
 
 using System.Net;
 using System.Reflection;
+using estore.api.Abstractions.Services;
 using estore.api.Extensions;
 using estore.api.Middleware;
 using estore.api.Models.Aggregates.Employee;
 using estore.api.Models.Aggregates.Employee.ValueObjects;
+using estore.common.Common.Pagination;
 using estore.common.Common.Results;
+using estore.common.Models.Requests;
 using estore.common.Models.Responses;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 
 public class Program
@@ -39,22 +44,23 @@ public class Program
 
         app.MapGet("/api/employee/{employeeId}", async (
             [FromRoute] int employeeId,
-            [FromServices] IEmployeeRepository repository) =>
-        {
-            var response = await repository.FindByConditionAsync(x => x.Id == new EmployeeId(employeeId));
-
-            return response.Any() ?
-                Results.Ok(Result<EmployeeResponse>.SuccessResult(response.Select(x => new EmployeeResponse
-                {
-                    Title = x.Title,
-                    FullName = $"{x.FirstName} {x.LastName}",
-                    EmployeeId = employeeId
-                }).Single())) :
-                Results.NotFound(Result<EmployeeResponse>.FailedResult($"Employee not found with Id:{employeeId}", HttpStatusCode.NotFound));
-        })
+            [FromServices] IGeneralServices service) => await service.GetEmployeeById(employeeId))
          .WithTags("General")
          .Produces<Result<EmployeeResponse>>((int)HttpStatusCode.OK)
          .Produces<Result<EmployeeResponse>>((int)HttpStatusCode.NotFound);
+
+        app.MapGet("/api/categories", async (
+            [FromServices] IGeneralServices service) => await service.GetCategories())
+         .WithTags("General")
+         .Produces<Result<CategoryResponse>>((int)HttpStatusCode.OK);
+
+        app.MapGet("/api/products", (
+            [AsParameters] SearchProductRequest search,
+            [FromServices] IGeneralServices service,
+            HttpContext http) => service.GetProducts(search, http))
+         .WithTags("General")
+         .Produces<PagedList<ProductResponse>>((int)HttpStatusCode.OK)
+         .Produces<PagedList<ProductResponse>>((int)HttpStatusCode.NotFound);
 
         app.Run();
     }

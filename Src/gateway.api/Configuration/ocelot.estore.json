@@ -3,21 +3,35 @@
     {
       "DownstreamPathTemplate": "/api/employee/{everything}",
       "ServiceName": "estore",
-      "UpstreamPathTemplate": "/gateway/employee/{everything}",
+      "UpstreamPathTemplate": "/gateway/employees/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
       "SwaggerKey": "estore"
     },
     {
       "DownstreamPathTemplate": "/api/customer/{everything}",
       "ServiceName": "estore",
-      "UpstreamPathTemplate": "/gateway/customer/{everything}",
+      "UpstreamPathTemplate": "/gateway/customers/{everything}",
       "UpstreamHttpMethod": [ "GET" ],
       "SwaggerKey": "estore"
     },
     {
       "DownstreamPathTemplate": "/api/order/{everything}",
       "ServiceName": "estore",
-      "UpstreamPathTemplate": "/gateway/order/{everything}",
+      "UpstreamPathTemplate": "/gateway/orders/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "estore"
+    },
+    {
+      "DownstreamPathTemplate": "/api/products/{everything}",
+      "ServiceName": "estore",
+      "UpstreamPathTemplate": "/gateway/products/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "estore"
+    },
+    {
+      "DownstreamPathTemplate": "/api/categories",
+      "ServiceName": "estore",
+      "UpstreamPathTemplate": "/gateway/categories",
       "UpstreamHttpMethod": [ "GET" ],
       "SwaggerKey": "estore"
     }

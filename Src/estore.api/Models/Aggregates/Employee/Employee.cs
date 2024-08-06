@@ -41,6 +41,10 @@ public sealed class Employee : AggregateRoot<EmployeeId>
 
     public IReadOnlyList<EmployeeTerritory> EmployeeTerritories => _employeeTerritories.AsReadOnly();
 
+    public int GetAge() => DateTime.Now.Year - BirthDate.Year;
+
+    public int ServiceDuration() => DateTime.Now.Year - HireDate.Year;
+
     private Employee() { }
 
     public Employee(EmployeeId employeeId,

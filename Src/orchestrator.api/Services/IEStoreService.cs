@@ -12,6 +12,8 @@ public interface IEStoreService
 
     Task<Result<EmployeeResponse>> GetEmployeeById(int employeeId);
 
+    Task<Result<CustomerResponse>> GetCustomerByPhoneNumber(string phoneNumber);
+
     Task<Result> DeleteCustomer(string customerId);
 
     Task<Result> DeleteOrder(int orderId);
@@ -25,4 +27,8 @@ public interface IEStoreService
     Task<IResult> RemoveOrder(Guid correlationId);
 
     Task<IResult> GetPaymentState(Guid correlationId);
+
+    Task<IResult> GetAllOrders();
+
+    Task<IResult> GetAllPayments();
 }

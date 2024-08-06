@@ -21,6 +21,7 @@ public static class ApplicationDependencies
         // Services
         services.AddScoped<ICustomerServices, CustomerServices>();
         services.AddScoped<IOrderServices, OrderServices>();
+        services.AddScoped<IGeneralServices, GeneralServices>();
 
         // Mappers
         services.AddScoped<ICustomerMapper, CustomerMapper>();

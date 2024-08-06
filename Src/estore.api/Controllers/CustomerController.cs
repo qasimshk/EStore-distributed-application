@@ -25,6 +25,16 @@ public class CustomerController(ICustomerServices customerServices) : Controller
         return result.IsSuccess ? Ok(result) : NotFound(result);
     }
 
+    [HttpGet("phone/{phoneNumber}", Name = nameof(GetCustomerByPhoneNumber))]
+    [ProducesResponseType(typeof(Result<CustomerResponse>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    public async Task<IActionResult> GetCustomerByPhoneNumber([FromRoute] string phoneNumber)
+    {
+        var result = await _customerServices.GetCustomerByPhoneNumber(phoneNumber);
+
+        return result.IsSuccess ? Ok(result) : NotFound(result);
+    }
+
     [HttpGet("search", Name = nameof(GetCustomerBySearchParameters))]
     [ProducesResponseType(typeof(PagedList<CustomerResponse>), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]

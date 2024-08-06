@@ -55,6 +55,18 @@ public class CustomerServices(
             .FailedResult("Customer not found with this Id", HttpStatusCode.NotFound);
     }
 
+    public async Task<Result<CustomerResponse>> GetCustomerByPhoneNumber(string phoneNumber)
+    {
+        var customer = await _customerRepository
+            .FindByConditionAsync(x => x.Phone == phoneNumber);
+
+        return customer.Any() ?
+           Result<CustomerResponse>
+            .SuccessResult(_customerMapper.Map(customer.SingleOrDefault()!)) :
+           Result<CustomerResponse>
+            .FailedResult("Customer not found with this Id", HttpStatusCode.NotFound);
+    }
+
     public PagedList<CustomerResponse> GetCustomers(SearchCustomerRequest search)
     {
         var customers = _customerRepository.GetAll();
