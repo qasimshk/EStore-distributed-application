@@ -41,27 +41,6 @@ public class Program
 
         app.UseAuthorization();
         app.MapControllers();
-
-        app.MapGet("/api/employee/{employeeId}", async (
-            [FromRoute] int employeeId,
-            [FromServices] IGeneralServices service) => await service.GetEmployeeById(employeeId))
-         .WithTags("General")
-         .Produces<Result<EmployeeResponse>>((int)HttpStatusCode.OK)
-         .Produces<Result<EmployeeResponse>>((int)HttpStatusCode.NotFound);
-
-        app.MapGet("/api/categories", async (
-            [FromServices] IGeneralServices service) => await service.GetCategories())
-         .WithTags("General")
-         .Produces<Result<CategoryResponse>>((int)HttpStatusCode.OK);
-
-        app.MapGet("/api/products", (
-            [AsParameters] SearchProductRequest search,
-            [FromServices] IGeneralServices service,
-            HttpContext http) => service.GetProducts(search, http))
-         .WithTags("General")
-         .Produces<PagedList<ProductResponse>>((int)HttpStatusCode.OK)
-         .Produces<PagedList<ProductResponse>>((int)HttpStatusCode.NotFound);
-
         app.Run();
     }
 }

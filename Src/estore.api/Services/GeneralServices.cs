@@ -53,7 +53,7 @@ public class GeneralServices(EStoreDBContext dbContext,
             Results.NotFound(Result<EmployeeResponse>.FailedResult($"Employee not found with Id:{employeeId}", HttpStatusCode.NotFound));
     }
 
-    public PagedList<ProductResponse> GetProducts(SearchProductRequest search, HttpContext http)
+    public PagedList<ProductResponse> GetProducts(SearchProductRequest search)
     {
         var query = _dbContext.Products
             .Include(x => x.Category)
@@ -83,18 +83,6 @@ public class GeneralServices(EStoreDBContext dbContext,
             UnitsInStock = pro.UnitsInStock,
             UnitsOnOrder = pro.UnitsOnOrder,
         }).AsQueryable(), search.PageNumber, search.PageSize);
-
-        var metadata = new
-        {
-            result.TotalCount,
-            result.PageSize,
-            result.CurrentPage,
-            result.TotalPages,
-            result.HasNext,
-            result.HasPrevious
-        };
-
-        http.Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(metadata));
 
         return result;
     }

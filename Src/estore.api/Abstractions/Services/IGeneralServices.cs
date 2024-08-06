@@ -10,5 +10,5 @@ public interface IGeneralServices
 
     Task<IResult> GetEmployeeById(int employeeId);
 
-    PagedList<ProductResponse> GetProducts(SearchProductRequest search, HttpContext http);
+    PagedList<ProductResponse> GetProducts(SearchProductRequest search);
 }
