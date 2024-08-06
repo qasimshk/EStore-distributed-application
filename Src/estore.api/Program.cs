@@ -1,19 +1,8 @@
 namespace estore.api;
 
-using System.Net;
 using System.Reflection;
-using estore.api.Abstractions.Services;
 using estore.api.Extensions;
 using estore.api.Middleware;
-using estore.api.Models.Aggregates.Employee;
-using estore.api.Models.Aggregates.Employee.ValueObjects;
-using estore.common.Common.Pagination;
-using estore.common.Common.Results;
-using estore.common.Models.Requests;
-using estore.common.Models.Responses;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Mvc;
 
 public class Program
 {
