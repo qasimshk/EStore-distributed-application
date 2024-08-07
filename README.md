@@ -49,7 +49,7 @@ In summary, both patterns have their own advantages and disadvantages. Orchestra
 
 <a href="https://buymeacoffee.com/cematix" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-#### Order Request - NOTE: try it twice as it take few attempts to warm up the services
+#### Order Request
 ```http
 {
   "customer": {
