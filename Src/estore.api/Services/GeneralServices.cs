@@ -1,8 +1,6 @@
 namespace estore.api.Services;
 
 using System.Net;
-using Azure;
-using System.Text.Json;
 using estore.api.Abstractions.Services;
 using estore.api.Models.Aggregates.Employee;
 using estore.api.Models.Aggregates.Employee.ValueObjects;
@@ -12,7 +10,6 @@ using estore.common.Common.Results;
 using estore.common.Models.Requests;
 using estore.common.Models.Responses;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
 
 public class GeneralServices(EStoreDBContext dbContext,
     IEmployeeRepository employeeRepository,
@@ -22,7 +19,7 @@ public class GeneralServices(EStoreDBContext dbContext,
     private readonly IEmployeeRepository _employeeRepository = employeeRepository;
     private readonly IPagedList<ProductResponse> _paged = paged;
 
-    public async Task<IResult> GetCategories()
+    public async Task<Result<List<CategoryResponse>>> GetCategories()
     {
         var category = await _dbContext.Categories.Select(category => new CategoryResponse
         {
@@ -31,15 +28,15 @@ public class GeneralServices(EStoreDBContext dbContext,
             Description = category.Description!
         }).ToListAsync();
 
-        return Results.Ok(Result<List<CategoryResponse>>.SuccessResult(category));
+        return Result<List<CategoryResponse>>.SuccessResult(category);
     }
 
-    public async Task<IResult> GetEmployeeById(int employeeId)
+    public async Task<Result<EmployeeResponse>> GetEmployeeById(int employeeId)
     {
         var response = await _employeeRepository.FindByConditionAsync(x => x.Id == new EmployeeId(employeeId));
 
         return response.Any() ?
-            Results.Ok(Result<EmployeeResponse>.SuccessResult(response.Select(x => new EmployeeResponse
+            Result<EmployeeResponse>.SuccessResult(response.Select(x => new EmployeeResponse
             {
                 EmployeeId = x.Id.Value,
                 Title = x.Title,
@@ -49,8 +46,8 @@ public class GeneralServices(EStoreDBContext dbContext,
                 ServiceYears = x.ServiceDuration(),
                 ContactNumber = $"{x.HomePhone} EXT:{x.Extension}",
                 Notes = x.Notes
-            }).Single())) :
-            Results.NotFound(Result<EmployeeResponse>.FailedResult($"Employee not found with Id:{employeeId}", HttpStatusCode.NotFound));
+            }).Single()) :
+            Result<EmployeeResponse>.FailedResult($"Employee not found with Id:{employeeId}", HttpStatusCode.NotFound);
     }
 
     public PagedList<ProductResponse> GetProducts(SearchProductRequest search)

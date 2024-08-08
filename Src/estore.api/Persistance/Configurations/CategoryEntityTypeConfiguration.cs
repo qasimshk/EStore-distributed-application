@@ -29,6 +29,6 @@ public class CategoryEntityTypeConfiguration : IEntityTypeConfiguration<Category
             .WithOne(pro => pro.Category)
             .HasForeignKey(pro => pro.CategoryId)
             .HasPrincipalKey(cat => cat.CategoryId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.ClientCascade);
     }
 }

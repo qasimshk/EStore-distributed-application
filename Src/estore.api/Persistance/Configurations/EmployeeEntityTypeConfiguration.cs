@@ -96,7 +96,7 @@ public class EmployeeEntityTypeConfiguration : IEntityTypeConfiguration<Employee
             .HasForeignKey(et => et.EmployeeId)
             .HasPrincipalKey(emp => emp.Id)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.ClientCascade);
 
         builder.HasIndex(emp => emp.LastName);
     }

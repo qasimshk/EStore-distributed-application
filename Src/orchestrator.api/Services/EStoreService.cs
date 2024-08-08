@@ -193,7 +193,7 @@ public class EStoreService(HttpClient httpClient,
             ErrorMessage = order.ErrorMessage,
             FailedOn = order.FailedOn,
             OrderId = order.OrderId ?? 0,
-        }).ToListAsync();
+        }).OrderByDescending(x => x.CreatedOn).ToListAsync();
 
         return orders.Count != 0 ? Results.Ok(orders) : Results.NotFound();
     }
@@ -209,7 +209,7 @@ public class EStoreService(HttpClient httpClient,
             Amount = $"£{pay.Amount}",
             pay.ErrorMessage,
             pay.FailedOn,
-        }).ToListAsync();
+        }).OrderByDescending(x => x.CreatedOn).ToListAsync();
 
         return payment.Count != 0 ? Results.Ok(payment) : Results.NotFound();
     }

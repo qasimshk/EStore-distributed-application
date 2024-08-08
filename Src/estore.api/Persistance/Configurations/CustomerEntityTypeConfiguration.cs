@@ -72,7 +72,7 @@ public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer
             .HasForeignKey(order => order.CustomerId)
             .HasPrincipalKey(c => c.Id)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.ClientCascade);
 
         builder.HasIndex(c => c.CompanyName);
     }

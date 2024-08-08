@@ -1,14 +1,15 @@
 namespace estore.api.Abstractions.Services;
 
 using estore.common.Common.Pagination;
+using estore.common.Common.Results;
 using estore.common.Models.Requests;
 using estore.common.Models.Responses;
 
 public interface IGeneralServices
 {
-    Task<IResult> GetCategories();
+    Task<Result<List<CategoryResponse>>> GetCategories();
 
-    Task<IResult> GetEmployeeById(int employeeId);
+    Task<Result<EmployeeResponse>> GetEmployeeById(int employeeId);
 
     PagedList<ProductResponse> GetProducts(SearchProductRequest search);
 }

@@ -76,7 +76,7 @@ public class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
             .HasForeignKey(orderDetail => orderDetail.OrderId)
             .HasPrincipalKey(o => o.Id)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.ClientCascade);
 
         builder.HasOne(o => o.Employee)
             .WithMany(emp => emp.Orders)
