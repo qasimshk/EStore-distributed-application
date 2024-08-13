@@ -22,7 +22,8 @@ public class CustomerRepository(EStoreDBContext context) : ICustomerRepository
     public IQueryable<Customer> GetAll() =>
         _context.Customers
         .Include(cus => cus.Orders)
-        .ThenInclude(ord => ord.Employee);
+        .ThenInclude(ord => ord.Employee)
+        .AsNoTracking();
 
     public void Update(Customer entity) => _context.Update(entity);
 

@@ -20,7 +20,8 @@ public class EmployeeRepository(EStoreDBContext context) : IEmployeeRepository
 
     public IQueryable<Employee> GetAll() =>
         _context.Employees
-        .Include(x => x.EmployeeTerritories);
+        .Include(x => x.EmployeeTerritories)
+        .AsNoTracking();
 
     public void Update(Employee entity) => _context.Update(entity);
 }

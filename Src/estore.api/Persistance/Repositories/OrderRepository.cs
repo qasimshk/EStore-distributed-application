@@ -26,7 +26,8 @@ public class OrderRepository(EStoreDBContext context) : IOrderRepository
         .Include(ord => ord.Employee)
         .Include(ord => ord.OrderDetails)
         .ThenInclude(orderDetail => orderDetail.Item)
-        .ThenInclude(item => item.Category);
+        .ThenInclude(item => item.Category)
+        .AsNoTracking();
 
     public void Update(Order entity) => _context.Orders.Update(entity);
 
