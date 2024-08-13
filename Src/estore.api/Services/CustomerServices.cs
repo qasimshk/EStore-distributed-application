@@ -67,31 +67,33 @@ public class CustomerServices(
             .FailedResult("Customer not found with this Id", HttpStatusCode.NotFound);
     }
 
-    public PagedList<CustomerResponse> GetCustomers(SearchCustomerRequest search)
+    public async Task<PagedList<CustomerResponse>> GetCustomers(SearchCustomerRequest search)
     {
-        var customers = _customerRepository.GetAll();
+        var query = _customerRepository.GetAll();
 
         if (!string.IsNullOrEmpty(search.CustomerId))
         {
-            customers = customers.Where(x => x.Id == new CustomerId(search.CustomerId));
+            query = query.Where(x => x.Id == new CustomerId(search.CustomerId));
         }
 
         if (!string.IsNullOrEmpty(search.ContactName))
         {
-            customers = customers.Where(x => x.ContactName == search.ContactName);
+            query = query.Where(x => x.ContactName == search.ContactName);
         }
 
         if (!string.IsNullOrEmpty(search.ContactTitle))
         {
-            customers = customers.Where(x => x.ContactTitle == search.ContactTitle);
+            query = query.Where(x => x.ContactTitle == search.ContactTitle);
         }
 
         if (!string.IsNullOrEmpty(search.CompanyName))
         {
-            customers = customers.Where(x => x.CompanyName == search.CompanyName);
+            query = query.Where(x => x.CompanyName == search.CompanyName);
         }
 
-        return _paged.ToPagedList(customers.Distinct().Select(_customerMapper.Map).AsQueryable(), search.PageNumber, search.PageSize);
+        var customers = query.Distinct().Select(cus => _customerMapper.Map(cus)).AsQueryable();
+
+        return await _paged.ToPagedList(customers, search.PageNumber, search.PageSize);
     }
 
     public async Task<Result> DeleteCustomer(string customerId)

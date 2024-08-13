@@ -50,7 +50,7 @@ public class GeneralServices(EStoreDBContext dbContext,
             Result<EmployeeResponse>.FailedResult($"Employee not found with Id:{employeeId}", HttpStatusCode.NotFound);
     }
 
-    public PagedList<ProductResponse> GetProducts(SearchProductRequest search)
+    public async Task<PagedList<ProductResponse>> GetProducts(SearchProductRequest search)
     {
         var query = _dbContext.Products
             .Include(x => x.Category)
@@ -66,7 +66,7 @@ public class GeneralServices(EStoreDBContext dbContext,
             query = query.Where(x => x.ProductId == search.ProductId);
         }
 
-        var result = _paged.ToPagedList(query.Distinct().Select(pro => new ProductResponse
+        var result = await _paged.ToPagedList(query.Distinct().Select(pro => new ProductResponse
         {
             ProductName = pro.ProductName,
             CategoryName = pro.Category.CategoryName,

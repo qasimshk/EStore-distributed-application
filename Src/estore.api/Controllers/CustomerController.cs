@@ -38,9 +38,9 @@ public class CustomerController(ICustomerServices customerServices) : Controller
     [HttpGet("search", Name = nameof(GetCustomerBySearchParameters))]
     [ProducesResponseType(typeof(PagedList<CustomerResponse>), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
-    public IActionResult GetCustomerBySearchParameters([FromQuery] SearchCustomerRequest search)
+    public async Task<IActionResult> GetCustomerBySearchParameters([FromQuery] SearchCustomerRequest search)
     {
-        var result = _customerServices.GetCustomers(search);
+        var result = await _customerServices.GetCustomers(search);
 
         var metadata = new
         {

@@ -11,7 +11,7 @@ public interface ICustomerServices
 
     Task<Result<CustomerResponse>> GetCustomerByPhoneNumber(string phoneNumber);
 
-    PagedList<CustomerResponse> GetCustomers(SearchCustomerRequest search);
+    Task<PagedList<CustomerResponse>> GetCustomers(SearchCustomerRequest search);
 
     Task<Result<CreateCustomerResponse>> CreateCustomer(CreateCustomerRequest customerRequest);
 

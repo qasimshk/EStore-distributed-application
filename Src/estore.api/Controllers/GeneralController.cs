@@ -24,9 +24,9 @@ public class GeneralController(IGeneralServices services) : Controller
 
     [HttpGet("/api/products")]
     [ProducesResponseType(typeof(Result<CategoryResponse>), (int)HttpStatusCode.OK)]
-    public IActionResult GetProducts([FromQuery] SearchProductRequest search)
+    public async Task<IActionResult> GetProducts([FromQuery] SearchProductRequest search)
     {
-        var result = _services.GetProducts(search);
+        var result = await _services.GetProducts(search);
 
         var metadata = new
         {

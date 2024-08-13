@@ -87,7 +87,7 @@ public class OrderServices(IOrderRepository orderRepository,
                 .FailedResult("Order not found with this Id", HttpStatusCode.NotFound);
     }
 
-    public PagedList<OrderResponse> GetOrderBySearch(SearchOrderRequest searchOrder)
+    public async Task<PagedList<OrderResponse>> GetOrderBySearch(SearchOrderRequest searchOrder)
     {
         var raw = _orderRepository.GetAll();
 
@@ -110,7 +110,9 @@ public class OrderServices(IOrderRepository orderRepository,
                 break;
             }
         }
-        return _paged.ToPagedList(raw.Distinct().Select(_orderMapper.Map).AsQueryable(), searchOrder.PageNumber, searchOrder.PageSize);
+        return await _paged.ToPagedList(raw.Distinct()
+            .Select(ord => _orderMapper.Map(ord))
+            .AsQueryable(), searchOrder.PageNumber, searchOrder.PageSize);
     }
 
     public async Task<Result> DeleteOrder(int orderId)

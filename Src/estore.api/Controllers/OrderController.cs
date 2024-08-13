@@ -3,7 +3,6 @@ namespace estore.api.Controllers;
 using System.Net;
 using System.Text.Json;
 using estore.api.Abstractions.Services;
-using estore.api.Services;
 using estore.common.Common.Pagination;
 using estore.common.Common.Results;
 using estore.common.Models.Requests;
@@ -28,9 +27,9 @@ public class OrderController(IOrderServices orderServices) : Controller
 
     [HttpGet("search")]
     [ProducesResponseType(typeof(PagedList<OrderResponse>), (int)HttpStatusCode.OK)]
-    public IActionResult GetOrderBySearch([FromQuery] SearchOrderRequest search)
+    public async Task<IActionResult> GetOrderBySearch([FromQuery] SearchOrderRequest search)
     {
-        var response = _orderServices.GetOrderBySearch(search);
+        var response = await _orderServices.GetOrderBySearch(search);
 
         var metadata = new
         {

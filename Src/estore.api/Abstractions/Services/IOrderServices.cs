@@ -9,7 +9,7 @@ public interface IOrderServices
 {
     Task<Result<OrderResponse>> GetOrderByOrderId(int orderId);
 
-    PagedList<OrderResponse> GetOrderBySearch(SearchOrderRequest searchOrder);
+    Task<PagedList<OrderResponse>> GetOrderBySearch(SearchOrderRequest searchOrder);
 
     Task<Result<OrderResponse>> CreateOrder(CreateOrderRequest createOrder);
 
