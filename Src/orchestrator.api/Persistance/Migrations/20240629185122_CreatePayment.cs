@@ -6,9 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 public partial class CreatePayment : Migration
 {
     /// <inheritdoc />
-    protected override void Up(MigrationBuilder migrationBuilder)
-    {
-        migrationBuilder.CreateTable(
+    protected override void Up(MigrationBuilder migrationBuilder) => migrationBuilder.CreateTable(
             name: "PaymentState",
             columns: table => new
             {
@@ -19,16 +17,9 @@ public partial class CreatePayment : Migration
                 FailedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                 ErrorMessage = table.Column<string>(type: "nvarchar(max)", nullable: true)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_PaymentState", x => x.CorrelationId);
-            });
-    }
+            constraints: table => table.PrimaryKey("PK_PaymentState", x => x.CorrelationId));
 
     /// <inheritdoc />
-    protected override void Down(MigrationBuilder migrationBuilder)
-    {
-        migrationBuilder.DropTable(
+    protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.DropTable(
             name: "PaymentState");
-    }
 }

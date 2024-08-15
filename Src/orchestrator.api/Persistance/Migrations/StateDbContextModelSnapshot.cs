@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using orchestrator.api.Persistance.Context;
 
 [DbContext(typeof(StateDbContext))]
-partial class StateDbContextModelSnapshot : ModelSnapshot
+internal sealed partial class StateDbContextModelSnapshot : ModelSnapshot
 {
     protected override void BuildModel(ModelBuilder modelBuilder)
     {

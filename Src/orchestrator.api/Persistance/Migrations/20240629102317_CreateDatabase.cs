@@ -6,9 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 public partial class CreateDatabase : Migration
 {
     /// <inheritdoc />
-    protected override void Up(MigrationBuilder migrationBuilder)
-    {
-        migrationBuilder.CreateTable(
+    protected override void Up(MigrationBuilder migrationBuilder) => migrationBuilder.CreateTable(
             name: "OrderState",
             columns: table => new
             {
@@ -22,16 +20,9 @@ public partial class CreateDatabase : Migration
                 ErrorMessage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 JsonOrderRequest = table.Column<string>(type: "nvarchar(max)", nullable: false)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_OrderState", x => x.CorrelationId);
-            });
-    }
+            constraints: table => table.PrimaryKey("PK_OrderState", x => x.CorrelationId));
 
     /// <inheritdoc />
-    protected override void Down(MigrationBuilder migrationBuilder)
-    {
-        migrationBuilder.DropTable(
+    protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.DropTable(
             name: "OrderState");
-    }
 }

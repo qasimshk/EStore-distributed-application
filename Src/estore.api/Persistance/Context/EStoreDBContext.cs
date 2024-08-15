@@ -8,10 +8,8 @@ using estore.api.Models.Aggregates.Orders;
 using estore.api.Models.Aggregates.Orders.Entities;
 using Microsoft.EntityFrameworkCore;
 
-public class EStoreDBContext : DbContext, IUnitOfWork
+public class EStoreDBContext(DbContextOptions<EStoreDBContext> options) : DbContext(options), IUnitOfWork
 {
-    public EStoreDBContext(DbContextOptions<EStoreDBContext> options) : base(options) { }
-
     public DbSet<Order> Orders { get; set; }
 
     public DbSet<OrderDetail> OrderDetails { get; set; }

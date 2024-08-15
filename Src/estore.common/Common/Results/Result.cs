@@ -2,19 +2,11 @@ namespace estore.common.Common.Results;
 
 using System.Net;
 
-public class Result
+public class Result(bool isSuccess, List<string>? errorMessages, HttpStatusCode statusCode)
 {
-    // https://github.com/amantinband/error-or
-    public Result(bool isSuccess, List<string>? errorMessages, HttpStatusCode statusCode)
-    {
-        IsSuccess = isSuccess;
-        ErrorMessages = errorMessages;
-        StatusCode = statusCode;
-    }
-
-    public bool IsSuccess { get; }
-    public List<string>? ErrorMessages { get; }
-    public HttpStatusCode StatusCode { get; }
+    public bool IsSuccess { get; } = isSuccess;
+    public List<string>? ErrorMessages { get; } = errorMessages;
+    public HttpStatusCode StatusCode { get; } = statusCode;
 
     public static Result SuccessResult() => new(true, null, HttpStatusCode.OK);
 

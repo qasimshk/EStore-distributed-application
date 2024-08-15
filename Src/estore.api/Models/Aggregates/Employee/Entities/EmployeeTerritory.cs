@@ -14,12 +14,4 @@ public sealed class EmployeeTerritory : Entity<EmployeeTerritoryId>
     public Territory Territory { get; set; }
 
     private EmployeeTerritory() { }
-
-    private EmployeeTerritory(EmployeeTerritoryId employeeTerritoryId,
-        EmployeeId employeeId,
-        string territoryId) : base(employeeTerritoryId)
-    {
-        EmployeeId = employeeId;
-        TerritoryId = territoryId;
-    }
 }

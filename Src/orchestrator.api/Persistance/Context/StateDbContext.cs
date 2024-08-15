@@ -3,13 +3,11 @@ namespace orchestrator.api.Persistance.Context;
 using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using orchestrator.api.Persistance.Entities;
 using orchestrator.api.Persistance.Configurations;
+using orchestrator.api.Persistance.Entities;
 
-public class StateDbContext : SagaDbContext
+public class StateDbContext(DbContextOptions<StateDbContext> options) : SagaDbContext(options)
 {
-    public StateDbContext(DbContextOptions<StateDbContext> options) : base(options) { }
-
     public DbSet<OrderState> OrderStates { get; set; }
 
     public DbSet<PaymentState> PaymentStates { get; set; }

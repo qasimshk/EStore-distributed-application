@@ -96,6 +96,6 @@ public class PaymentStateMachine : MassTransitStateMachine<PaymentState>
     {
         var rand = new Random();
         var r = rand.Next(0, 10000);
-        return ((10000 - r) * 10 + r * 1000) / 10000;
+        return (((10000 - r) * 10) + (r * 1000)) / 10000;
     }
 }

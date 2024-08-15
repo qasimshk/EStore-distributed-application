@@ -1,7 +1,7 @@
 namespace orchestrator.api.Persistance.Entities;
 
-using MassTransit;
 using System;
+using MassTransit;
 
 public class OrderState : SagaStateMachineInstance
 {

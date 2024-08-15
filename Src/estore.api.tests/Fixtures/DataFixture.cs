@@ -21,10 +21,10 @@ public class CustomerFaker : Faker<Customer>
                 AddressFaker.GetData().Generate(1).Single()));
 
     [Fact]
-    public void GetData_WhenInvoke_ReturnCustomerType()
+    public void GetDataWhenInvokeReturnCustomerType()
     {
         // Act
-        var customer = CustomerFaker.GetData().Generate(1).Single();
+        var customer = GetData().Generate(1).Single();
 
         // Assert
         customer.Should().BeOfType<Customer>();
@@ -42,10 +42,10 @@ public class AddressFaker : Faker<Addresses>
                         faker.Address.Country()));
 
     [Fact]
-    public void GetData_WhenInvoke_ReturnAddressesType()
+    public void GetDataWhenInvokeReturnAddressesType()
     {
         // Act
-        var address = AddressFaker.GetData().Generate(1).Single();
+        var address = GetData().Generate(1).Single();
 
         // Assert
         address.Should().BeOfType<Addresses>();
@@ -67,13 +67,13 @@ public class OrderFaker : Faker<Order>
             AddressFaker.GetData().Generate(1).Single()));
 
     [Fact]
-    public void GetData_WhenInvoke_ReturnOrderType()
+    public void GetDataWhenInvokeReturnOrderType()
     {
         // Arrange
         var customer = CustomerFaker.GetData().Generate(1).Single();
 
         // Act
-        var order = OrderFaker.GetData(customer).Generate(1).Single();
+        var order = GetData(customer).Generate(1).Single();
 
         // Assert
         order.Should().BeOfType<Order>();
@@ -84,20 +84,20 @@ public class OrderDetailsFaker : Faker<OrderDetail>
 {
     public static Faker<OrderDetail> GetData(Order order) => (OrderDetailsFaker)new OrderDetailsFaker()
         .CustomInstantiator(faker => OrderDetail.Create(order,
-            faker.Random.Number(1,10),
+            faker.Random.Number(1, 10),
             faker.Random.Decimal(10, 99),
             faker.Random.Number(1, 10),
             faker.Random.Double(10, 99)));
 
     [Fact]
-    public void GetData_WhenInvoke_ReturnOrderDetailsType()
+    public void GetDataWhenInvokeReturnOrderDetailsType()
     {
         // Arrange
         var customer = CustomerFaker.GetData().Generate(1).Single();
         var order = OrderFaker.GetData(customer).Generate(1).Single();
 
         // Act
-        var orderDetails = OrderDetailsFaker.GetData(order).Generate(1).Single();
+        var orderDetails = GetData(order).Generate(1).Single();
 
         // Assert
         orderDetails.Should().BeOfType<OrderDetail>();
@@ -124,10 +124,10 @@ public class EmployeeFaker : Faker<Employee>
 
 
     [Fact]
-    public void GetData_WhenInvoke_ReturnEmployeeType()
+    public void GetDataWhenInvokeReturnEmployeeType()
     {
         // Act
-        var employee = EmployeeFaker.GetData().Generate(1).Single();
+        var employee = GetData().Generate(1).Single();
 
         // Assert
         employee.Should().BeOfType<Employee>();

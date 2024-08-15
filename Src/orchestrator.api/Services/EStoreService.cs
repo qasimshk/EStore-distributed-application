@@ -1,5 +1,9 @@
 namespace orchestrator.api.Services;
 
+using System;
+using System.Net;
+using System.Text;
+using System.Text.Json;
 using estore.common.Common.Results;
 using estore.common.Events;
 using estore.common.Models.Requests;
@@ -9,10 +13,6 @@ using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using orchestrator.api.Persistance.Context;
-using System;
-using System.Net;
-using System.Text;
-using System.Text.Json;
 
 public class EStoreService(HttpClient httpClient,
     IValidator<SubmitOrderRequest> validator,

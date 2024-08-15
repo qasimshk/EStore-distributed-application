@@ -12,7 +12,7 @@ public class CustomerOrderResponse
 
     public string RequiredDate { get; set; } = string.Empty;
 
-    public string ShippedDate { get; set;} = string.Empty;
+    public string ShippedDate { get; set; } = string.Empty;
 
     public int ShipVia { get; set; }
 

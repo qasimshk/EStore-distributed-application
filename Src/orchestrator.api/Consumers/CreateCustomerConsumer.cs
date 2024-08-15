@@ -1,10 +1,10 @@
 namespace orchestrator.api.Consumers;
 
+using System.Net;
 using estore.common.Events;
 using estore.common.Models.Requests;
 using MassTransit;
 using orchestrator.api.Services;
-using System.Net;
 
 public class CreateCustomerConsumer(IEStoreService eStoreService) : IConsumer<CreateCustomerEvent>
 {

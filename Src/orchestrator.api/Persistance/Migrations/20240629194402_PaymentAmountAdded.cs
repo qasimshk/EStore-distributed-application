@@ -6,21 +6,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 public partial class PaymentAmountAdded : Migration
 {
     /// <inheritdoc />
-    protected override void Up(MigrationBuilder migrationBuilder)
-    {
-        migrationBuilder.AddColumn<decimal>(
+    protected override void Up(MigrationBuilder migrationBuilder) => migrationBuilder.AddColumn<decimal>(
             name: "Amount",
             table: "PaymentState",
             type: "decimal(18,2)",
             nullable: false,
             defaultValue: 0m);
-    }
 
     /// <inheritdoc />
-    protected override void Down(MigrationBuilder migrationBuilder)
-    {
-        migrationBuilder.DropColumn(
+    protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.DropColumn(
             name: "Amount",
             table: "PaymentState");
-    }
 }

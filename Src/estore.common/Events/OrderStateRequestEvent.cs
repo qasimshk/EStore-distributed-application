@@ -1,3 +1,3 @@
-﻿namespace estore.common.Events;
+namespace estore.common.Events;
 
 public class OrderStateRequestEvent : BaseEvent { }

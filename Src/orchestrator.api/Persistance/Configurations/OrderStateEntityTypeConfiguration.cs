@@ -1,8 +1,8 @@
 namespace orchestrator.api.Persistance.Configurations;
 
 using MassTransit;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using orchestrator.api.Persistance.Entities;
 
 public class OrderStateEntityTypeConfiguration : SagaClassMap<OrderState>
