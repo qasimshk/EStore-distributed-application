@@ -1,4 +1,4 @@
-### Introduction - [Online Demo](http://gateway.runasp.net/swagger/index.html)
+### Introduction [Online Demo - Hosting](http://gateway.runasp.net/swagger/index.html) - [Online Demo - Azure Cloud](https://es-gateway-eqe9h3dgfhdjazfd.eastus-01.azurewebsites.net/swagger/index.html)
 
 The EStore distributed system project is developed (using [MassTransit](https://masstransit.io/)) to explain the concept of orchestration microservice architecture & sagas patterns. As the name says this orchestrator api is responsible for the workflow of each asynchronous transaction. The payload sent by the gateway API is stored in the database and an entry is created. The created entry state is updated on each successful response sent by the consuming microservices.
 
@@ -7,6 +7,7 @@ The EStore distributed system project is developed (using [MassTransit](https://
 | APIs  | URLs |
 | ------------- | ------------- |
 | Build Pipeline | [![Build](https://github.com/qasimshk/EStore-distributed-application/actions/workflows/build.yml/badge.svg)](https://github.com/qasimshk/EStore-distributed-application/actions/workflows/build.yml) |
+| Azure Cloud | [View Online](https://es-gateway-eqe9h3dgfhdjazfd.eastus-01.azurewebsites.net/swagger/index.html) |
 | Gateway | [View Online](http://gateway.runasp.net/swagger/index.html) |
 | Orchestrator | [View Online](http://orchestrator.runasp.net/swagger/index.html) |
 | EStore | [View Online](http://estoresrv.runasp.net/swagger/index.html) |
