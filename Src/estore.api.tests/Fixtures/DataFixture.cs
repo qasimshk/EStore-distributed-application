@@ -15,7 +15,7 @@ public class CustomerFaker : Faker<Customer>
             .CustomInstantiator(faker => Customer.Create(
                 faker.Company.CompanyName(),
                 faker.Name.FullName(faker.PickRandom<Gender>()),
-                faker.Name.JobTitle(),
+                "Software Engineer",
                 faker.Phone.PhoneNumber(),
                 faker.Phone.PhoneNumber(),
                 AddressFaker.GetData().Generate(1).Single()));

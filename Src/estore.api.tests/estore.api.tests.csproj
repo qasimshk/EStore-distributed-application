@@ -46,7 +46,6 @@
 
   <ItemGroup>
     <Folder Include="Integrations\" />
-    <Folder Include="Units\Validations\" />
   </ItemGroup>
 
 </Project>

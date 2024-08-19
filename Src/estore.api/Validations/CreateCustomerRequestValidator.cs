@@ -34,8 +34,14 @@ public class CreateCustomerRequestValidator : AbstractValidator<CreateCustomerRe
             .Cascade(cascadeMode: CascadeMode.Stop)
             .NotNull()
             .NotEmpty()
-            .MustAsync(async (phone, cancellation) =>
-                !(await _customerRepository.FindByConditionAsync(x => x.Phone == phone)).Any())
+            .MustAsync(async (phone, cancellation) => await CheckCustomerPhoneNumber(phone))
             .WithMessage(x => $"Customer with this phone number '{x.Phone}' already exist");
+    }
+
+    private async Task<bool> CheckCustomerPhoneNumber(string phoneNumber)
+    {
+        var customer = await _customerRepository.FindByConditionAsync(x => x.Phone == phoneNumber);
+
+        return !customer.Any();
     }
 }
