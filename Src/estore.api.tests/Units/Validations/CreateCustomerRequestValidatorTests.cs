@@ -82,6 +82,8 @@ public class CreateCustomerRequestValidatorTests
         result.IsValid.Should().BeFalse();
 
         result.Errors.Should().HaveCount(1);
+
+        result.Errors.Should().ContainSingle().Which.PropertyName.Should().Be("Phone");
     }
 
     [Fact]
@@ -111,5 +113,7 @@ public class CreateCustomerRequestValidatorTests
         result.IsValid.Should().BeFalse();
 
         result.Errors.Should().HaveCount(3);
+
+        result.Errors.Select(e => e.PropertyName).Should().Contain(["CompanyName", "ContactName", "ContactTitle"]);
     }
 }

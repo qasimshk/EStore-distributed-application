@@ -32,6 +32,7 @@ public class OrderRepository(EStoreDBContext context) : IOrderRepository
     public void Update(Order entity) => _context.Orders.Update(entity);
 
     public void AddOrderDetails(List<OrderDetail> orderDetails) => _context.AddRange(orderDetails);
+
     public async Task<IEnumerable<Product>> Products(Expression<Func<Product, bool>> expression) =>
         await _context.Products
         .Include(pro => pro.Category)
