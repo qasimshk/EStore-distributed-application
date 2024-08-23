@@ -4,7 +4,7 @@ The EStore distributed system project is developed (using [MassTransit](https://
 
 ![](https://github.com/qasimshk/EStore/blob/main/Database/EStore%20Design.drawio.png)
 
-| APIs  | URLs |
+| API Gateway  | URLs |
 | ------------- | ------------- |
 | Azure Cloud | [View Online](https://es-gateway-eqe9h3dgfhdjazfd.eastus-01.azurewebsites.net/swagger/index.html) |
 | Hosting | [View Online](http://gateway.runasp.net/swagger/index.html) |
