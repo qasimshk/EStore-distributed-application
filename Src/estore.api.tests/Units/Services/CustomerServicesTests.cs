@@ -3,6 +3,7 @@ namespace estore.api.tests.Units.Services;
 using System.Net;
 using estore.api.Common;
 using estore.api.Mappers;
+using estore.api.Models.Aggregates.Customer.ValueObjects;
 using estore.api.Persistance.Repositories;
 using estore.api.Services;
 using estore.api.tests.Fixtures;
@@ -169,6 +170,8 @@ public class CustomerServicesTests : IClassFixture<MsSqlServerContainerTest>
         result.IsSuccess.Should().BeTrue();
 
         result.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        _customerRepository.GetAll().Should().NotContain(x => x.Id == new CustomerId(customerId));
     }
 
     [Fact]
