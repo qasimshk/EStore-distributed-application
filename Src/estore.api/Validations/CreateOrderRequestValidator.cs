@@ -50,7 +50,7 @@ public class CreateOrderRequestValidator : AbstractValidator<CreateOrderRequest>
 
                 orderDetail.MustAsync(async (orderDetailReq, cancellationToken) =>
                             await CheckProduct(orderDetailReq.ProductId))
-                           .WithMessage(x => $"Product with this id doesn't exist")
+                           .WithMessage(x => $"Product with this id {x.Select(x => x.ProductId).Single()} doesn't exist")
                            .NotEmpty()
                            .NotNull();
 

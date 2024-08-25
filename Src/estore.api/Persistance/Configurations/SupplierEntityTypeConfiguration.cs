@@ -12,6 +12,9 @@ public class SupplierEntityTypeConfiguration : IEntityTypeConfiguration<Supplier
 
         builder.HasKey(sup => sup.SupplierId);
 
+        builder.Property(sup => sup.SupplierId)
+            .ValueGeneratedNever();
+
         builder.Property(sup => sup.CompanyName)
             .HasMaxLength(40)
             .IsRequired();

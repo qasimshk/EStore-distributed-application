@@ -9,6 +9,71 @@ using estore.api.Models.Aggregates.Orders;
 using estore.api.Models.Aggregates.Orders.Entities;
 using static Bogus.DataSets.Name;
 
+public class SupplierFaker : Faker<Supplier>
+{
+    public static Faker<Supplier> GetData() => new Faker<Supplier>()
+        .CustomInstantiator(faker => Supplier.Create(
+            faker.Company.CompanyName(),
+            faker.Name.FindName(),
+            "Sale",
+            faker.Phone.PhoneNumber(),
+            faker.Phone.PhoneNumber(),
+            "Test",
+            AddressFaker.GetData().Generate(1).Single()));
+
+    [Fact]
+    public void GetDataWhenInvokeReturnCustomerType()
+    {
+        // Act
+        var customer = GetData().Generate(1).Single();
+
+        // Assert
+        customer.Should().BeOfType<Supplier>();
+    }
+}
+
+public class CategoryFaker : Faker<Category>
+{
+    public static Faker<Category> GetData() => new Faker<Category>()
+        .CustomInstantiator(faker => Category.Create(
+            faker.Commerce.Categories(1)[0],
+            faker.Commerce.Categories(1)[0]));
+
+    [Fact]
+    public void GetDataWhenInvokeReturnCustomerType()
+    {
+        // Act
+        var customer = GetData().Generate(1).Single();
+
+        // Assert
+        customer.Should().BeOfType<Category>();
+    }
+}
+
+public class ProductFaker : Faker<Product>
+{
+    public static Faker<Product> GetData(int categoryId, int supplierId) => new Faker<Product>()
+        .CustomInstantiator(faker => Product.Create(faker.Commerce.ProductName(),
+            supplierId,
+            categoryId,
+            faker.Random.Number(1, 9).ToString(),
+            faker.Random.Decimal(10, 20),
+            faker.Random.Number(10, 90),
+            faker.Random.Number(1, 10),
+            faker.Random.Number(5, 9),
+            true));
+
+    [Fact]
+    public void GetDataWhenInvokeReturnCustomerType()
+    {
+        // Act
+        var customer = GetData(1,1).Generate(1).Single();
+
+        // Assert
+        customer.Should().BeOfType<Product>();
+    }
+}
+
 public class CustomerFaker : Faker<Customer>
 {
     public static Faker<Customer> GetData() => (CustomerFaker)new CustomerFaker()
@@ -35,11 +100,11 @@ public class AddressFaker : Faker<Addresses>
 {
     public static Faker<Addresses> GetData() => (AddressFaker)new AddressFaker()
         .CustomInstantiator(faker => Addresses.Create(
-                        faker.Address.FullAddress(),
-                        faker.Address.City(),
+                        "Test Address",
+                        "Test City",
                         faker.Address.State(),
                         faker.Address.ZipCode(),
-                        faker.Address.Country()));
+                        "UK"));
 
     [Fact]
     public void GetDataWhenInvokeReturnAddressesType()
@@ -54,10 +119,10 @@ public class AddressFaker : Faker<Addresses>
 
 public class OrderFaker : Faker<Order>
 {
-    public static Faker<Order> GetData(Customer customer) => (OrderFaker)new OrderFaker()
+    public static Faker<Order> GetData(Customer customer, Employee employee) => (OrderFaker)new OrderFaker()
         .CustomInstantiator(faker => Order.Create(
             customer,
-            EmployeeFaker.GetData().Generate(1).Single(),
+            employee,
             DateTime.Now,
             DateTime.Now.AddDays(5),
             DateTime.Now.AddDays(10),
@@ -71,9 +136,10 @@ public class OrderFaker : Faker<Order>
     {
         // Arrange
         var customer = CustomerFaker.GetData().Generate(1).Single();
+        var employee = EmployeeFaker.GetData().Generate(1).Single();
 
         // Act
-        var order = GetData(customer).Generate(1).Single();
+        var order = GetData(customer, employee).Generate(1).Single();
 
         // Assert
         order.Should().BeOfType<Order>();
@@ -82,9 +148,9 @@ public class OrderFaker : Faker<Order>
 
 public class OrderDetailsFaker : Faker<OrderDetail>
 {
-    public static Faker<OrderDetail> GetData(Order order) => (OrderDetailsFaker)new OrderDetailsFaker()
+    public static Faker<OrderDetail> GetData(Order order, int productId) => (OrderDetailsFaker)new OrderDetailsFaker()
         .CustomInstantiator(faker => OrderDetail.Create(order,
-            faker.Random.Number(1, 10),
+            productId,
             faker.Random.Decimal(10, 99),
             faker.Random.Number(1, 10),
             faker.Random.Double(10, 99)));
@@ -94,10 +160,11 @@ public class OrderDetailsFaker : Faker<OrderDetail>
     {
         // Arrange
         var customer = CustomerFaker.GetData().Generate(1).Single();
-        var order = OrderFaker.GetData(customer).Generate(1).Single();
+        var employee = EmployeeFaker.GetData().Generate(1).Single();
+        var order = OrderFaker.GetData(customer, employee).Generate(1).Single();
 
         // Act
-        var orderDetails = GetData(order).Generate(1).Single();
+        var orderDetails = GetData(order, 1).Generate(1).Single();
 
         // Assert
         orderDetails.Should().BeOfType<OrderDetail>();
@@ -106,12 +173,14 @@ public class OrderDetailsFaker : Faker<OrderDetail>
 
 public class EmployeeFaker : Faker<Employee>
 {
+    private static int GetValue() => Math.Abs(new Guid(Guid.NewGuid().ToString()).GetHashCode());
+
     public static Faker<Employee> GetData() => (EmployeeFaker)new EmployeeFaker()
-        .CustomInstantiator(faker => new Employee(new EmployeeId(faker.Random.Number(1, 20)),
-            faker.Name.JobTitle(),
+        .CustomInstantiator(faker => new Employee(new EmployeeId(GetValue()),
+            "Mr",
             faker.Name.FirstName(),
             faker.Name.LastName(),
-            faker.Name.JobTitle(),
+            "Test",
             faker.Person.DateOfBirth,
             DateTime.Now,
             faker.Phone.PhoneNumber(),
