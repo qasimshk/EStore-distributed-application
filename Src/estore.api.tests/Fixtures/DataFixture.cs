@@ -68,6 +68,43 @@ public class ProductFaker : Faker<Product>
     }
 }
 
+public class CustomerCreateModelInValidTestData : TheoryData<CreateCustomerRequest>
+{
+    private readonly List<Customer> customers =
+        [.. CustomerFaker.GetData().Generate(3)];
+
+    public CustomerCreateModelInValidTestData()
+    {
+        Add(new CreateCustomerRequest
+        {
+            CompanyName = "Test",
+            Address = customers[0].CustomerAddress.Address,
+            City = customers[0].CustomerAddress.City,
+            ContactName = "AB",
+            ContactTitle = "Test",
+            Country = customers[0].CustomerAddress.Country,
+            Fax = customers[0].Fax,
+            Phone = customers[0].Phone,
+            PostalCode = customers[0].CustomerAddress.PostalCode,
+            Region = customers[0].CustomerAddress.Region
+        });
+
+        Add(new CreateCustomerRequest
+        {
+            CompanyName = "TestTestTestTSTestTestTestTSTestTestTestTSTestTestTestTSTEST",
+            Address = customers[0].CustomerAddress.Address,
+            City = customers[0].CustomerAddress.City,
+            ContactName = "ABCDEABCDEABCDEABCDEABCDEABCDEABCDE",
+            ContactTitle = "TestsTestsTestsTestsTestsTestsTests",
+            Country = customers[0].CustomerAddress.Country,
+            Fax = customers[0].Fax,
+            Phone = customers[0].Phone,
+            PostalCode = customers[0].CustomerAddress.PostalCode,
+            Region = customers[0].CustomerAddress.Region
+        });
+    }
+}
+
 public class CustomerFaker : Faker<Customer>
 {
     public static Faker<Customer> GetData() => (CustomerFaker)new CustomerFaker()

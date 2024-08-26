@@ -67,6 +67,10 @@ public class WebApplicationFactoryFixture : IAsyncLifetime
             Context.AddRange(orderDetails);
             row++;
         }
+
+        // Customer with no order 
+        Context.Add(CustomerFaker.GetData().Generate(1).Single());
+
         await Context.SaveChangesAsync();
 
         Client = _factory.CreateDefaultClient();

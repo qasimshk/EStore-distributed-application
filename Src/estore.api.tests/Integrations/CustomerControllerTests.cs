@@ -120,6 +120,21 @@ public class CustomerControllerTests : IClassFixture<WebApplicationFactoryFixtur
         serviceResponse.Count.Should().Be(pageSize);
     }
 
+
+    [Theory]
+    [ClassData(typeof(CustomerCreateModelInValidTestData))]
+    public async Task CreateCustomer_Should_ReturnBadRequest_WhenAnInValidRequestSent(CreateCustomerRequest request)
+    {
+        // Arrange
+        var serviceRequest = GetRequestToStringConstant(request);
+
+        // Act
+        var response = await _httpClient.PostAsync($"/api/customer", serviceRequest);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
     [Fact]
     public async Task CreateCustomer_ShouldReturnTrue_WhenCreateCustomerRequestSent()
     {
@@ -147,6 +162,34 @@ public class CustomerControllerTests : IClassFixture<WebApplicationFactoryFixtur
         response.StatusCode.Should().Be(HttpStatusCode.Created);
 
          _dbContext.Customers.Should().ContainSingle(x => x.Phone == customer.Phone);
+    }
+
+    [Fact]
+    public async Task DeleteCustomer_ShouldReturnNoContentResult_WhenValidCustomerIdSent()
+    {
+        // Arrange
+        var customerId = (await _dbContext.Customers.Where(x => x.Orders.Count == 0).FirstAsync()).Id.Value;
+
+        // Act        
+        var response = await _httpClient.DeleteAsync($"api/customer/delete/{customerId}");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        _dbContext.Customers.Should().NotContain(x => x.Id == new CustomerId(customerId));
+    }
+
+    [Fact]
+    public async Task DeleteCustomer_ShouldReturnNoFoundResult_WhenInValidCustomerIdSent()
+    {
+        // Arrange
+        var customerId = "Abc123";
+
+        // Act        
+        var response = await _httpClient.DeleteAsync($"api/customer/delete/{customerId}");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
     private static StringContent GetRequestToStringConstant(object request)
