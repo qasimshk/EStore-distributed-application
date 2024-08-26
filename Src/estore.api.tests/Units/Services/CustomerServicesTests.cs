@@ -1,34 +1,19 @@
 namespace estore.api.tests.Units.Services;
 
-using System.Net;
-using estore.api.Common;
-using estore.api.Mappers;
-using estore.api.Models.Aggregates.Customer.ValueObjects;
-using estore.api.Persistance.Repositories;
-using estore.api.Services;
-using estore.api.tests.Fixtures;
-using estore.common.Common.Pagination;
-using estore.common.Models.Requests;
-using estore.common.Models.Responses;
-using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.EntityFrameworkCore;
-using Moq;
-
-public class CustomerServicesTests : IClassFixture<MsSqlServerContainerTest>
+public class CustomerServicesTests : IClassFixture<MsSqlServerTestContainerFixture>
 {
     private readonly CustomerServices _customerServices;
     private readonly CustomerRepository _customerRepository;
 
-    public CustomerServicesTests(MsSqlServerContainerTest msSqlServerContainer)
+    public CustomerServicesTests(MsSqlServerTestContainerFixture msSqlServerContainer)
     {
-        _customerRepository = new CustomerRepository(msSqlServerContainer.DbContext);
+        _customerRepository = new CustomerRepository(msSqlServerContainer._dbContext);
 
         var customerMapper = new CustomerMapper();
 
         var pagedList = new PagedList<CustomerResponse>();
 
-        var unitOfWork = new UnitOfWork(msSqlServerContainer.DbContext);
+        var unitOfWork = new UnitOfWork(msSqlServerContainer._dbContext);
 
         var mockValidatorCustomerRequest = new Mock<IValidator<CreateCustomerRequest>>();
 

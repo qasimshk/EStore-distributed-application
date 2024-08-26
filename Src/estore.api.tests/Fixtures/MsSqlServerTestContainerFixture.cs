@@ -1,18 +1,14 @@
 namespace estore.api.tests.Fixtures;
 
-using System.Data.Common;
-using System.Threading.Tasks;
-using estore.api.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
-using Testcontainers.MsSql;
 
-public sealed class MsSqlServerContainerTest : IAsyncLifetime
+public sealed class MsSqlServerTestContainerFixture : IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer;
     private DbConnection _connection = null!;
-    public EStoreDBContext DbContext { get; private set; } = null!;
+    public EStoreDBContext _dbContext { get; private set; } = null!;
 
-    public MsSqlServerContainerTest() => _msSqlContainer = new MsSqlBuilder()
+    public MsSqlServerTestContainerFixture() => _msSqlContainer = new MsSqlBuilder()
         .WithCleanUp(true)
         .Build();
 
@@ -28,12 +24,14 @@ public sealed class MsSqlServerContainerTest : IAsyncLifetime
 
         var dbContextBuilder = new DbContextOptionsBuilder<EStoreDBContext>();
         var dbContextOption = dbContextBuilder.UseSqlServer(_msSqlContainer.GetConnectionString());
-        DbContext = new EStoreDBContext(dbContextOption.Options);
-        _connection = DbContext.Database.GetDbConnection();
+        _dbContext = new EStoreDBContext(dbContextOption.Options);
+        _connection = _dbContext.Database.GetDbConnection();
 
         await _connection.OpenAsync();
 
-        DbContext.Database.EnsureCreated();
+        await _dbContext.Database.EnsureDeletedAsync();
+
+        await _dbContext.Database.EnsureCreatedAsync();
 
         var customers = CustomerFaker.GetData().Generate(10).ToList();
         var categories = CategoryFaker.GetData().Generate(10).ToList();
@@ -47,15 +45,15 @@ public sealed class MsSqlServerContainerTest : IAsyncLifetime
             var order = OrderFaker.GetData(customer, employee).Generate(1).Single();
             var orderDetails = OrderDetailsFaker.GetData(order, product.ProductId).Generate(1).ToList();
 
-            DbContext.Add(categories[row]);
-            DbContext.Add(product);
-            DbContext.Add(supplier[row]);
-            DbContext.Add(customer);
-            DbContext.Add(employee);
-            DbContext.Add(order);
-            DbContext.AddRange(orderDetails);
+            _dbContext.Add(categories[row]);
+            _dbContext.Add(product);
+            _dbContext.Add(supplier[row]);
+            _dbContext.Add(customer);
+            _dbContext.Add(employee);
+            _dbContext.Add(order);
+            _dbContext.AddRange(orderDetails);
             row++;
         }
-        await DbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync();
     }
 }

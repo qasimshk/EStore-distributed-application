@@ -1,12 +1,5 @@
 namespace estore.api.tests.Units.Validations;
 
-using System.Linq.Expressions;
-using estore.api.Models.Aggregates.Customer;
-using estore.api.tests.Fixtures;
-using estore.api.Validations;
-using estore.common.Models.Requests;
-using Moq;
-
 public class CreateCustomerRequestValidatorTests
 {
     private readonly CreateCustomerRequestValidator _validator;

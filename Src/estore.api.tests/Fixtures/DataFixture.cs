@@ -1,12 +1,6 @@
 namespace estore.api.tests.Fixtures;
 
 using Bogus;
-using estore.api.Models.Aggregates;
-using estore.api.Models.Aggregates.Customer;
-using estore.api.Models.Aggregates.Employee;
-using estore.api.Models.Aggregates.Employee.ValueObjects;
-using estore.api.Models.Aggregates.Orders;
-using estore.api.Models.Aggregates.Orders.Entities;
 using static Bogus.DataSets.Name;
 
 public class SupplierFaker : Faker<Supplier>
