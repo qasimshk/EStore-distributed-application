@@ -105,7 +105,7 @@ public class CustomerControllerTests : IClassFixture<WebApplicationFactoryFixtur
         // Arrange
         var pageNumber = 1;
         var pageSize = 10;
-        var pagination = /*lang=json,strict*/ "{\"TotalCount\":10,\"PageSize\":10,\"CurrentPage\":1,\"TotalPages\":1,\"HasNext\":false,\"HasPrevious\":false}";
+        var pagination = /*lang=json,strict*/ "{\"TotalCount\":11,\"PageSize\":10,\"CurrentPage\":1,\"TotalPages\":2,\"HasNext\":true,\"HasPrevious\":false}";
 
         // Act
         var response = await _httpClient.GetAsync($"/api/customer/search?PageNumber={pageNumber}&PageSize={pageSize}&ContactTitle=Software%20engineer");
