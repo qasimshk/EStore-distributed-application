@@ -12,7 +12,7 @@ This <b>README</b> provides instructions and explanations for the unit and integ
 Before running the tests, ensure you have the following installed:
 
 - .NET SDK
-- Docker (for integration tests using TestContainer)
+- Docker (for unit & integration tests using TestContainer)
 - xUnit framework
 
 **Project Structure**
