@@ -145,6 +145,8 @@ public class CustomerControllerTests : IClassFixture<WebApplicationFactoryFixtur
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
+
+         _dbContext.Customers.Should().ContainSingle(x => x.Phone == customer.Phone);
     }
 
     private static StringContent GetRequestToStringConstant(object request)

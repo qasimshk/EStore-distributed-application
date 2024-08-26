@@ -29,8 +29,6 @@ public sealed class MsSqlServerTestContainerFixture : IAsyncLifetime
 
         await _connection.OpenAsync();
 
-        await _dbContext.Database.EnsureDeletedAsync();
-
         await _dbContext.Database.EnsureCreatedAsync();
 
         var customers = CustomerFaker.GetData().Generate(10).ToList();
