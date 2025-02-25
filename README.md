@@ -6,7 +6,6 @@ The EStore distributed system project is developed (using [MassTransit](https://
 
 | API Gateway  | URLs |
 | ------------- | ------------- |
-| Azure Cloud | [View Online](https://es-gateway-eqe9h3dgfhdjazfd.eastus-01.azurewebsites.net/swagger/index.html) |
 | Hosting | [View Online](http://gateway.runasp.net/swagger/index.html) |
 
 | Internal APIs  | URLs |
