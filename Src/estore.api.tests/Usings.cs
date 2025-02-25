@@ -28,3 +28,4 @@ global using Microsoft.EntityFrameworkCore;
 global using Moq;
 global using Testcontainers.MsSql;
 global using Xunit;
+global using System;
